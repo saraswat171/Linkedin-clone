@@ -7,7 +7,7 @@ const authenticateJWT = require('../middleware/authMiddleware');
 router.post('/usersinfo', async (req, res) => {
  
         const { name, email, password } = req.body;
-        console.log("chetan")
+        console.log("chetan" , typeof(password))
         const hashedPassword = await bcrypt.hash(password, 10);
         try {
             const existingUser = await UsersModel.findOne({ email })
