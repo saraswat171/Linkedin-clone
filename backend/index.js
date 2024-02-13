@@ -5,7 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes')
 const app = express();
-
+require('dotenv').config()
 // Connect to MongoDB
 connectDB();
 
@@ -22,9 +22,9 @@ app.use('/uploads', express.static('uploads')) // important
 // Routes
 app.use('/', authRoutes);
 app.use('/', userRoutes);
-app.use('/',postRoutes)
+app.use('/', postRoutes);
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// const PORT =  || 8080;
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });

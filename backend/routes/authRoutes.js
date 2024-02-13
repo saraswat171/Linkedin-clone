@@ -25,15 +25,6 @@ router.post('/usersinfo', async (req, res) => {
         catch (err) { res.status(500).json(err) }
 });
 
-router.post('/logout', authenticateJWT, (req, res) => {
-    console.log(res.locals.isAuthenticated)
-        if (res.locals.isAuthenticated) {
-     
-            res.json({ success: true, message: 'Logout successful' });
-        } else {
-            res.json({ success: false, message: 'Not logged in' });
-        }
-});
 
 router.post('/logininfo', async (req, res) => {
     console.log('req body', req.body)
