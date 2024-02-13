@@ -5,20 +5,20 @@ const CommentSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: [true]
+        require: true
     
     },
     postId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: PostModel,
-        require: [true]
+        require: true
     
     },
 
    
     body: {
         type: String,
-        require: [true]
+        require: true
     },
 
     createAt: {

@@ -5,11 +5,12 @@ const bcrypt = require('bcrypt');
 const UsersModel = require('../models/UserSchema');
 const authenticateJWT = require('../middleware/authMiddleware');
 router.post('/usersinfo', async (req, res) => {
- 
-        const { name, email, password } = req.body;
-        console.log("chetan" , typeof(password))
-        const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("chetan" )
+       
         try {
+            const { name, email, password } = req.body;
+            console.log("chetan" , typeof(password))
+            const hashedPassword = await bcrypt.hash(password, 10);
             const existingUser = await UsersModel.findOne({ email })
     
             console.log(existingUser)
@@ -22,12 +23,14 @@ router.post('/usersinfo', async (req, res) => {
         }
     
     
-        catch (err) { res.status(500).json(err) }
+        catch (err) {
+            console.log("this err",err)
+            res.status(404).json(err) }
 });
 
 
 router.post('/logininfo', async (req, res) => {
-    console.log('req body', req.body)
+    console.log('req body')
 
         try {
             const { email, password } = req.body;

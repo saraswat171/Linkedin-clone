@@ -4,28 +4,33 @@ const ProjectSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: [true]
+        require: true
     },
     name: {
         type: String,
+        require: true
     },
     title: {
         type: String,
+        v
     },
     description: {
         type: String,
     },
     technology: {
         type: String,
+        require: true
     },
     link: {
         type: String,
     },
     startDate: {
         type: Date,
+        require: true
     },
     endDate: {
         type: Date,
+        
     },
 })
 module.exports = mongoose.model('project', ProjectSchema)

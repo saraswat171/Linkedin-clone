@@ -2,14 +2,12 @@ const UsersModel = require('../models/UserSchema');
 
 
 exports.updateProfile = async (req) => {
-    const { id } = req.params;
-    const address = JSON.parse(req.body.address);
+ 
+        try {   console.log("hjdfv" , req.params)
+        const { id } = req.params;
     const { username, phone, website, title, industry, summary } = req.body;
+    const address = JSON.parse(req.body.address);
     const image = req.file.path;
-
-    
-
-    try {
         const user = await UsersModel.findByIdAndUpdate(id, {
             username: username,
             address: {
@@ -25,7 +23,7 @@ exports.updateProfile = async (req) => {
             title: title,
             summary: summary,
             industry: industry
-        });
+        },{new:true});
         if (!user) {
             return 'User not found'
         } else {
@@ -33,6 +31,6 @@ exports.updateProfile = async (req) => {
         }
     } catch (error) {
         console.error(error);
-        return error
+        throw error
     }
 };

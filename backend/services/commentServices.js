@@ -1,14 +1,13 @@
 const CommentModel = require('../models/CommentsSchema')
 exports.uploadcomment = async(req)=>{
 
-    const {postId} = req.params; 
-
-    const userId= req.query.userId;
-    const {body} =req.body;
-    console.log(userId , postId)
-    // userId exists in mongodb && postId exists
-    try {
   
+    try {
+        const {postId} = req.params; 
+        const userId= req.query.userId;
+        const {body} =req.body;
+        console.log(userId , postId)
+        // userId exists in mongodb && postId exists
         const newComment = await CommentModel.create({userId:userId , postId:postId , body:body})
         console.log(newComment)
         return newComment;
@@ -21,22 +20,15 @@ exports.uploadcomment = async(req)=>{
 };
 
 exports.getComments = async(req)=>{
-
-    const {postId}=req.params; 
-    let query={postId:postId};
-     const createAt=req.query.time;
-    if(createAt){
-     
-    query= { postId: postId, createAt: { $gte: (new Date(createAt)) } }
-   }
-    
-    
-    console.log(postId)
-    
     try {
-        console.log(postId)
-        console.log("first",createAt)
-        const commentData = await CommentModel.find(query).sort({createdAt :-1}).limit(2);
+        const {postId}=req.params; 
+        let query={postId:postId};
+         const createAt=req.query.time;
+        if(createAt){ 
+        query= { postId: postId, createAt: { $gte: (new Date(createAt)) } }
+       }
+        // console.log(postId); console.log(postId);   console.log("first",createAt)
+       const commentData = await CommentModel.find(query).sort({createdAt :-1}).limit(2);
         console.log(commentData)
       return commentData;
      
@@ -47,10 +39,9 @@ exports.getComments = async(req)=>{
 };
 
 exports.deleteComments=async(req)=>{
-    const {commentId} = req.params; 
-    const {userId}= req.query.userId;
-  
     try{
+        const {commentId} = req.params; 
+        const {userId}= req.query.userId;
         if(userId == await CommentModel.findById(commentId).userId){
             const delComment = await CommentModel.findByIdAndDelete(commentId);
             return delComment;
@@ -58,17 +49,17 @@ exports.deleteComments=async(req)=>{
        
     }
     catch(err){
-        return err;
+        throw err;
     }
 };
 exports.updateComment=async(req)=>{
-    console.log("we are at comment")
-    const {commentId} = req.params; 
-    const userId= req.query.userId;
-    const { body} = req.body;
-    const user= await CommentModel.findById(commentId)
-    console.log("first",userId==user.userId)
     try{
+        // console.log("we are at comment")
+        const {commentId} = req.params; 
+        const userId= req.query.userId;
+        const { body} = req.body;
+        const user= await CommentModel.findById(commentId)
+        // console.log("first",userId==user.userId)
         if(userId == user.userId){
             const updateComment= await CommentModel.findByIdAndUpdate(commentId,{body:body}, {new:true});
             return updateComment;
@@ -76,6 +67,6 @@ exports.updateComment=async(req)=>{
        
     }
     catch(err){
-        return err;
+        throw err;
     }
 };
