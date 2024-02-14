@@ -1,6 +1,6 @@
 const UsersModel = require('../models/UserSchema');
 
-
+const CustomError = require('../libs/error')
 exports.updateProfile = async (req) => {
  
         try {   console.log("hjdfv" , req.params)
@@ -25,12 +25,12 @@ exports.updateProfile = async (req) => {
             industry: industry
         },{new:true});
         if (!user) {
-            return 'User not found'
+            throw new CustomError('User not updated' , 403)
         } else {
             return user
         }
     } catch (error) {
-        console.error(error);
+       
         throw error
     }
 };

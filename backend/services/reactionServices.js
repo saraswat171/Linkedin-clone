@@ -1,4 +1,5 @@
 const ReactionModel = require('../models/ReactionSchema')
+const CustomError = require('../libs/error')
 exports.uploadReaction= async(req)=>{
 
    
@@ -26,6 +27,9 @@ exports.getReaction = async(req)=>{
         const {postId}=req.params; 
         const ReactionData = await ReactionModel.find({postId : postId});
         console.log("first" , ReactionData)
+        if(ReactionData.length == 0){
+            throw new CustomError("No reaction found" , 403)
+        }
       return ReactionData;
      
     }
@@ -46,6 +50,9 @@ exports.updateReaction=async(req)=>{
         if(userId == user.userId){
             const updateReaction= await ReactionModel.findByIdAndUpdate(reactionId,{type:type}, {new:true});
             return updateReaction;
+        }
+        else {
+            throw new CustomError("Not authorised" , 403)
         }
        
     }

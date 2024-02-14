@@ -7,7 +7,7 @@ exports.SignUpUser=(async(req,res)=>{
         return res.status(201).json(response); 
     }
     catch(e){
-        return res.status(e?.code).json({message:e?.message})
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 });
 exports.SignInUser=(async(req,res)=>{
@@ -16,6 +16,6 @@ exports.SignInUser=(async(req,res)=>{
         return res.status(200).json(response);
     }
     catch(e){
-        return res.status(e?.code).json({message:e?.message})
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 });

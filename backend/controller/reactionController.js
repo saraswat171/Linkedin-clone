@@ -8,9 +8,9 @@ exports.uploadingReaction=async(req,res)=>{
         console.log("first",response)
         return res.status(200).json(response);
     }
-    catch(err){
+    catch(e){
         console.log("abc",err)
-return res.status(500 ).json(err)
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 };
 
@@ -20,8 +20,8 @@ exports.fetchReaction = async(req,res)=>{
         const response = await reactionServices.getReaction(req);
         return res.status(200).json(response)
     }
-    catch(err){
-        return  res.status(500).json(err);
+    catch(e){
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 };
 
@@ -30,8 +30,8 @@ exports.deletingReaction = async(req,res)=>{
         const response = await reactionServices.deleteReaction(req);
         return res.status(200).json(response);
     }
-    catch(err){
-        return res.status(500).json(err);
+    catch(e){
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 };
 exports.updatingReaction = async(req,res)=>{
@@ -39,8 +39,8 @@ exports.updatingReaction = async(req,res)=>{
         const response = await reactionServices.updateReaction(req);
         return res.status(200).json(response);
     }
-    catch(err){
-        return res.status(500).json(err);
+    catch(e){
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 
 };

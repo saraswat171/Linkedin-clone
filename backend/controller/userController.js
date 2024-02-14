@@ -10,12 +10,12 @@ exports.updatingProfile = async (req, res) => {
             return res.status(404).json(response)
         }
         else{
-            return res.status(200).json(response)
+            return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
         }
 
-    }catch(err){
+    }catch(e){
         console.log(err)
-        return res.status(err.status).json({message: "error"})
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 }
 

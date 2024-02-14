@@ -1,54 +1,61 @@
 const PostModel = require('../models/PostSchema')
-exports.userPosts = async(req)=>{
-   
-         try {
-            const {id}= req.params; // userId
-            const {title , body} = req.body;
-            const images = req.files.map((i) => { return i.path }); 
-                //  console.log('images' , images)
-          const newuser = await PostModel.create({title:title,body:body,user:id,images:images});
-          console.log('newuser', newuser)
-     return newuser;
-         }
-         catch (err) { throw err;}
-};
-exports.getPosts = async(req)=>{
-   
+const CustomError = require('../libs/error')
+exports.userPosts = async (req) => {
+
     try {
-        const {id}=req.params; //userId
-        const postData = await PostModel.find({user : id});
-        console.log("first" , postData)
-      return postData;
-     
+        const { id } = req.params; // userId
+        const { title, body } = req.body;
+        const images = req.files.map((i) => { return i.path });
+        //  console.log('images' , images)
+        const newPost = await PostModel.create({ title: title, body: body, user: id, images: images });
+        console.log('newPost', newPost)
+        return newuser;
     }
-    catch(err){
+    catch (err) { throw err; }
+};
+exports.getPosts = async (req) => {
+
+    try {
+        const { id } = req.params; //userId
+        const postData = await PostModel.find({ user: id });
+        if (postData.length == 0) {
+            throw new CustomError("No post Found", 403)
+        }
+
+        return postData;
+
+    }
+    catch (err) {
         throw err;
     }
 };
 
-exports.deletPosts=async(req)=>{
-    
-    try{
-        const {postId} = req.params; //postId
-    console.log(postId)
+exports.deletPosts = async (req) => {
+
+    try {
+        const { postId } = req.params; //postId
+        console.log(postId)
         const delPost = await PostModel.findByIdAndDelete(postId);
+        if (delPost.length == 0) {
+            throw new CustomError("No post Found", 403)
+        }
         return delPost;
     }
-    catch(err){
+    catch (err) {
         throw err;
     }
 };
-exports.updatePost=async(req)=>{
-   
-    try{
-        const {postId} = req.params; //postId
+exports.updatePost = async (req) => {
+
+    try {
+        const { postId } = req.params; //postId
         console.log(postId)
         console.log(req.body)
-        const {title , body} = req.body;
-        const updatePost = await PostModel.findByIdAndUpdate(postId,{title:title,body:body}, {new:true});
+        const { title, body } = req.body;
+        const updatePost = await PostModel.findByIdAndUpdate(postId, { title: title, body: body }, { new: true });
         return updatePost;
     }
-    catch(err){
+    catch (err) {
         throw err;
     }
 };

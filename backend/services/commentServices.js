@@ -1,4 +1,7 @@
 const CommentModel = require('../models/CommentsSchema')
+const CustomError = require('../libs/error')
+const UsersModel = require('../models/UserSchema')
+const PostModel = require('../models/PostSchema')
 exports.uploadcomment = async(req)=>{
 
   
@@ -8,6 +11,10 @@ exports.uploadcomment = async(req)=>{
         const {body} =req.body;
         console.log(userId , postId)
         // userId exists in mongodb && postId exists
+        if( !  await PostModel.findOne({postId})){
+            throw new CustomError('No such post exists' , 403)
+        }
+
         const newComment = await CommentModel.create({userId:userId , postId:postId , body:body})
         console.log(newComment)
         return newComment;
