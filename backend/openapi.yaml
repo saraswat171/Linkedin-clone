@@ -1,0 +1,558 @@
+openapi: "3.0.0"
+info:
+  title: LinkedIn Clone 
+
+  version: "1.0.0"
+  description: Social media backend .
+servers:
+  - url: http://localhost:8080
+paths:
+  /usersinfo:
+    post:
+      tags:
+      - "Auth"
+   
+      summary: Create a new user
+      description: Creates a new user 
+      requestBody:
+        description: Request to create user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+        required: true
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+               type: object
+               properties:
+                 message:
+                  type: string
+                  example: Success
+               
+        '409':
+            description: Duplicate key error
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: The provided email already exists
+        '404':
+          description: 'Not Found: This response is shown if the request for information is not there or it could not be imported'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '400':
+         description: Fields are required
+
+  /logininfo:
+    post:
+      tags:
+        - Auth
+      summary: Get user login
+      description: Returns user details and token
+      requestBody:
+        description: Request to login user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserloginRequest'
+        required: true
+      responses:
+        '200':
+          description: User logged successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSchema'
+        
+        '404':
+          description: 'Not Found:  This response is shown if the request for information is not there or it could not be imported'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+        '400':
+         description:  Invalid or incorrect credential
+    
+  /profile/:id:
+    put:
+      tags:
+       - "User"
+      summary: Update User Profile
+      description: Update user data 
+      parameters:
+        - name: 'id'
+          in: path
+          required: true
+          description: The ID of User
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Request to edit advisor
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditUserSchema'
+        required: true
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+               
+                  $ref: '#/components/schemas/EditUserSchema'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not found
+        '400':
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: The provided userId is not valid, 1234 
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+
+
+
+  /posts/:id:
+    post:
+      tags:
+        - Post
+      summary: user post something
+      description: User post
+      requestBody:
+        required: true
+        content:
+         
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:          
+                  type: string
+                body:   
+                  type: integer
+                image:
+      
+                  type: string
+                  format: binary  
+              required:
+                - title
+                - body
+      parameters:
+        - name: 'id'
+          in: path
+          required: true
+          description: The ID of User
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          schema:
+            type: string
+            format: uuid         
+          
+      responses:
+        '201':
+          description: Post Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSchema'
+        
+        '404':
+          description: 'Not Found:  This response is shown if the request for information is not there or it could not be imported'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+        '400':
+         description:  Invalid or incorrect credential
+
+  
+    get:
+      tags:
+        - Post
+      summary: user post something
+      description: User post
+   
+      parameters:
+        - name: 'id'
+          in: path
+          required: true
+          description: The ID of User
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          schema:
+            type: string
+            format: uuid         
+          
+      responses:
+        '201':
+          description: Post fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostSchema'
+        
+        '404':
+          description: 'Not Found:  This response is shown if the request for information is not there or it could not be imported'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User Not found
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Internal server error
+        '400':
+         description:  Invalid or incorrect credential
+
+
+    
+    
+   
+components:
+  schemas:
+    UserSchema:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        name:
+          type: string
+        userame:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        phone:
+         type: number
+        website:
+         type: string
+        image:
+         type: string
+        title:
+         type: string
+        summary:
+         type: string 
+        industry:
+         type: string
+        address:
+         type: object
+         properties:
+           street:
+            type: string
+           state:
+            type: string
+           city:
+            type: string
+           pincode:
+            type: number
+           country:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation date and time
+          example: "2023-07-25T08:30:00Z"
+      
+    skillsSchema:
+      type: object
+      properties:
+            uuid:
+              type: string
+              format: uuid
+            user:
+              type: string
+              $ref: '#/components/schemas/UserSchema'
+              format: uuid
+            skills:
+              type: string 
+    ReactionSchema:
+     type: object
+     properties:
+       uuid:
+        type: string
+        format: uuid
+       user:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid
+       postId:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid 
+       commentId:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid 
+       type:
+        type: string
+       createdAt:
+        type: string
+        format: date-time
+        description: Creation date and time
+        example: "2023-07-25T08:30:00Z" 
+
+    ProjectSchema:
+     type: object
+     properties:
+       uuid:
+        type: string
+        format: uuid
+       userId:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+         
+        technology:
+          type: string
+       
+        link:
+         type: string 
+        startDate:
+         type: string 
+         format: date
+        endDate:
+         type: string 
+         format: date 
+
+
+    PostSchema:
+      type: object
+      properties:
+       uuid:
+        type: string
+        format: uuid          
+       title:
+          type: string
+       body:
+          type: string
+         
+       images:
+          type: string
+       createdAt:
+         type: string
+         format: date-time
+         description: Creation date and time
+         example: "2023-07-25T08:30:00Z" 
+       
+        
+    CommentSchema:
+      type: object
+      properties:
+       uuid:
+        type: string
+        format: uuid
+       userId:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid
+       postId:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid        
+       body:
+        type: string
+       createdAt:
+        type: string
+        format: date-time
+        description: Creation date and time
+        example: "2023-07-25T08:30:00Z" 
+    
+    ExperienceSchema:
+     type: object
+     properties:
+       uuid:
+        type: string
+        format: uuid
+       user:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid
+        companyname:
+          type: string
+        title:
+          type: string
+        description:
+          type: string        
+        Status:
+          type: boolean               
+        startDate:
+         type: string 
+         format: date
+        endDate:
+         type: string 
+         format: date 
+    
+    EducationSchema:
+     type: object
+     properties:
+       uuid:
+        type: string
+        format: uuid
+       user:
+        type: string
+        $ref: '#/components/schemas/UserSchema'
+        format: uuid
+        name:
+          type: string
+        degree:
+          type: string
+        fieldOfStudy:
+          type: string         
+        Grade:
+          type: number       
+        description:
+         type: string 
+        startDate:
+         type: string 
+         format: date
+        endDate:
+         type: string 
+         format: date 
+
+    EditUserSchema:
+      type: object
+      properties:            
+        userame:
+          type: string             
+        phone:
+         type: number
+        website:
+         type: string
+        image:
+         type: string
+        title:
+         type: string
+        summary:
+         type: string 
+        industry:
+         type: string
+        address:
+         type: object
+         properties:
+           street:
+            type: string
+           state:
+            type: string
+           city:
+            type: string
+           pincode:
+            type: number
+           country:
+            type: string
+       
+
+      
+    UserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+          format: email
+      
+      required:
+        - name
+        - email
+        - password
+
+    UserloginRequest:
+      type: object
+      properties:
+    
+        password:
+          type: string
+        email:
+          type: string
+          format: email
+      
+      required:
+        
+        - email
+        - password    
+   
