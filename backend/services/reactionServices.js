@@ -20,12 +20,50 @@ exports.uploadReaction= async(req)=>{
     }
 
 };
+exports.uploadCommentReaction= async(req)=>{
+
+   
+    // userId exists in mongodb && postId exists
+    try {
+        const {commentId} = req.params; 
+
+        const userId= req.query.userId;
+        const {type} =req.body;
+        console.log(userId , commentId)
+        const newReaction = await ReactionModel.create({userId:userId , commentId:commentId , type:type})
+        console.log(newReaction)
+        return newReaction;
+    }
+    catch(err){
+        console.log(err)
+        throw err;
+    }
+
+};
+
 
 exports.getReaction = async(req)=>{
   
     try {
         const {postId}=req.params; 
         const ReactionData = await ReactionModel.find({postId : postId});
+        console.log("first" , ReactionData)
+        if(ReactionData.length == 0){
+            throw new CustomError("No reaction found" , 403)
+        }
+      return ReactionData;
+     
+    }
+    catch(err){
+        throw err;
+    }
+};
+
+exports.getCommentReaction = async(req)=>{
+  
+    try {
+        const {commentId}=req.params; 
+        const ReactionData = await ReactionModel.find({commentId : commentId});
         console.log("first" , ReactionData)
         if(ReactionData.length == 0){
             throw new CustomError("No reaction found" , 403)

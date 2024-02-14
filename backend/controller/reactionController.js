@@ -13,7 +13,28 @@ exports.uploadingReaction=async(req,res)=>{
         return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 };
+exports.uploadingCommentReaction=async(req,res)=>{
+    try{
+        const response = await reactionServices.uploadCommentReaction(req);
+        console.log("first",response)
+        return res.status(200).json(response);
+    }
+    catch(e){
+        console.log("abc",err)
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
+    }
+};
 
+
+exports.fetchCommentReaction = async(req,res)=>{
+    try{
+        const response = await reactionServices.getCommentReaction(req);
+        return res.status(200).json(response)
+    }
+    catch(e){
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
+    }
+};
 
 exports.fetchReaction = async(req,res)=>{
     try{
