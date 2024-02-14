@@ -12,7 +12,7 @@ const ProjectSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        v
+        
     },
     description: {
         type: String,

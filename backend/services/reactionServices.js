@@ -4,7 +4,7 @@ exports.uploadReaction= async(req)=>{
 
    
     // userId exists in mongodb && postId exists
-    try {
+    try { 
         const {postId} = req.params; 
 
         const userId= req.query.userId;
@@ -24,7 +24,7 @@ exports.uploadCommentReaction= async(req)=>{
 
    
     // userId exists in mongodb && postId exists
-    try {
+    try {console.log("hjjhk")
         const {commentId} = req.params; 
 
         const userId= req.query.userId;
@@ -49,7 +49,7 @@ exports.getReaction = async(req)=>{
         const ReactionData = await ReactionModel.find({postId : postId});
         console.log("first" , ReactionData)
         if(ReactionData.length == 0){
-            throw new CustomError("No reaction found" , 403)
+            throw new CustomError("No reaction found" , 404)
         }
       return ReactionData;
      
@@ -66,7 +66,7 @@ exports.getCommentReaction = async(req)=>{
         const ReactionData = await ReactionModel.find({commentId : commentId});
         console.log("first" , ReactionData)
         if(ReactionData.length == 0){
-            throw new CustomError("No reaction found" , 403)
+            throw new CustomError("No reaction found" , 404)
         }
       return ReactionData;
      
@@ -90,7 +90,7 @@ exports.updateReaction=async(req)=>{
             return updateReaction;
         }
         else {
-            throw new CustomError("Not authorised" , 403)
+            throw new CustomError("Not authorised" , 404)
         }
        
     }

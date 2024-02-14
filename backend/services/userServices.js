@@ -6,17 +6,13 @@ exports.updateProfile = async (req) => {
         try {   console.log("hjdfv" , req.params)
         const { id } = req.params;
     const { username, phone, website, title, industry, summary } = req.body;
-    const address = JSON.parse(req.body.address);
+    if (req.body.address) {
+        var { street, state, city, pincode, country } = JSON.parse(req.body.address)
+    }
     const image = req.file.path;
         const user = await UsersModel.findByIdAndUpdate(id, {
             username: username,
-            address: {
-                street: address.street,
-                state: address.state,
-                city: address.city,
-                pincode: address.pincode,
-                country: address.country
-            },
+            address: { street, state, city, pincode, country },
             phone: phone,
             website: website,
             image: image,
@@ -25,7 +21,7 @@ exports.updateProfile = async (req) => {
             industry: industry
         },{new:true});
         if (!user) {
-            throw new CustomError('User not updated' , 403)
+            throw new CustomError('User not updated' , 404)
         } else {
             return user
         }

@@ -12,7 +12,7 @@ exports.uploadcomment = async(req)=>{
         console.log(userId , postId)
         // userId exists in mongodb && postId exists
         if( !  await PostModel.findOne({postId})){
-            throw new CustomError('No such post exists' , 403)
+            throw new CustomError('No such post exists' , 404)
         }
 
         const newComment = await CommentModel.create({userId:userId , postId:postId , body:body})
@@ -48,12 +48,12 @@ exports.getComments = async(req)=>{
 exports.deleteComments=async(req)=>{
     try{
         const {commentId} = req.params; 
-        const {userId}= req.query.userId;
+        const userId= req.query.userId;
         if(userId == await CommentModel.findById(commentId).userId){
             const delComment = await CommentModel.findByIdAndDelete(commentId);
             return delComment;
         }
-       
+        throw new CustomError("Unauthorised", 401)
     }
     catch(err){
         throw err;
@@ -71,7 +71,7 @@ exports.updateComment=async(req)=>{
             const updateComment= await CommentModel.findByIdAndUpdate(commentId,{body:body}, {new:true});
             return updateComment;
         }
-       
+        throw new CustomError("Unauthorised", 401)
     }
     catch(err){
         throw err;

@@ -6,7 +6,7 @@ exports.uploadingReaction=async(req,res)=>{
     try{
         const response = await reactionServices.uploadReaction(req);
         console.log("first",response)
-        return res.status(200).json(response);
+        return res.status(201).json(response);
     }
     catch(e){
         console.log("abc",err)
@@ -17,10 +17,10 @@ exports.uploadingCommentReaction=async(req,res)=>{
     try{
         const response = await reactionServices.uploadCommentReaction(req);
         console.log("first",response)
-        return res.status(200).json(response);
+        return res.status(201).json(response);
     }
     catch(e){
-        console.log("abc",err)
+        console.log("abc",e)
         return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 };

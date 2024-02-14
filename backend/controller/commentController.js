@@ -5,7 +5,7 @@ exports.uploadingComment=async(req,res)=>{
     try{
         const response = await commentServices.uploadcomment(req);
         console.log("first",response)
-        return res.status(200).json(response);
+        return res.status(201).json(response);
     }
     catch(e){
         return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})

@@ -17,9 +17,9 @@ exports.getPosts = async (req) => {
 
     try {
         const { id } = req.params; //userId
-        const postData = await PostModel.find({ user: id });
+        const postData = await PostModel.find({ user: id }).populate({ path: 'user', select: 'name' });
         if (postData.length == 0) {
-            throw new CustomError("No post Found", 403)
+            throw new CustomError("No post Found", 404)
         }
 
         return postData;
@@ -34,12 +34,17 @@ exports.deletPosts = async (req) => {
 
     try {
         const { postId } = req.params; //postId
+        const userId= req.query.userId;
         console.log(postId)
-        const delPost = await PostModel.findByIdAndDelete(postId);
-        if (delPost.length == 0) {
-            throw new CustomError("No post Found", 403)
+        if(userId == await PostModel.findById(postId).user){
+            const delPost = await PostModel.findByIdAndDelete(postId);
+            return delPost;
         }
-        return delPost;
+       
+       
+            throw new CustomError("Unauthorised", 401)
+        
+        
     }
     catch (err) {
         throw err;
@@ -49,11 +54,16 @@ exports.updatePost = async (req) => {
 
     try {
         const { postId } = req.params; //postId
+        const userId= req.query.userId;
         console.log(postId)
         console.log(req.body)
         const { title, body } = req.body;
-        const updatePost = await PostModel.findByIdAndUpdate(postId, { title: title, body: body }, { new: true });
-        return updatePost;
+        if(userId == await PostModel.findById(postId).user){
+            const updatePost = await PostModel.findByIdAndUpdate(postId, { title: title, body: body }, { new: true });
+            return updatePost;
+        }
+        throw new CustomError("Unauthorised", 401)
+        
     }
     catch (err) {
         throw err;

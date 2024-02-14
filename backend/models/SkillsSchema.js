@@ -7,8 +7,23 @@ const SkillsSchema = new mongoose.Schema({
         ref: UsersModel,
         require: true
     },
-    name: {
+    skills: {
         type: String,
     }
 })
 module.exports = mongoose.model('skills', SkillsSchema)
+
+
+          skillsSchema:
+          type: object
+          properties:
+            uuid:
+              type: string
+              format: uuid
+            user:
+              type: string
+              $ref: '#/components/schemas/UserSchema'
+              format: uuid
+            skills:
+              type: string
+              
