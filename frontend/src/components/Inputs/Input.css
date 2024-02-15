@@ -1,0 +1,22 @@
+.inputdiv{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    
+}
+
+#textfieldmui{
+    height: 32px;
+}
+.label{
+    font-family:  Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+/* .label{
+    #F5F5F5
+} */

@@ -1,0 +1,150 @@
+/* .container{
+    background-color: #F3F2F0;
+   height: 100vh;
+ 
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    
+}
+.icon-link{
+    height: 34px;
+    width: 135px;
+}
+.header{
+
+    padding: 24px;
+}
+.header_paragraph{
+    padding: 24px;
+}
+.header-para{
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 38px;
+    color: rgba(0, 0, 0, 0.9);
+  
+}
+
+ .hero{
+    background-color: white;
+    width: 400px;
+    height: 560px;
+    border-radius: 5px;
+    margin: auto;
+   
+ }
+ .text-field{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+ }
+ .textbutton{
+    padding: 0 24px 0 24px;
+ }
+ .textbuttonpara{
+    margin-bottom: 16px;
+ 
+
+ } */
+
+ .container{
+    background-color: #F3F2F0;
+   height: 100vh;
+ 
+}
+.content{
+   width: 1000px;
+   margin: auto;
+   padding: 24px;
+}
+
+.icon-link{
+    height: 34px;
+    width: 100px;
+}
+.hero{
+    text-align: center;
+}
+
+.header_paragraph{
+    padding: 24px; 
+}
+.header-para{
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 38px;
+    color: rgba(0, 0, 0, 0.9);
+  
+}
+.hero-content{
+    background-color: white;
+    width: 400px;
+    /* height: 452px; */
+    border-radius: 5px;
+    margin: auto;
+}
+.text-field{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+ }
+ .textbutton{
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: center;
+ }
+ .textbuttonpara{
+    margin-bottom: 16px;
+    margin-top: 16px;
+   
+  font-size: 12px;
+ }
+ .spantext{
+    color:#0B66C2;
+ }
+ .or{
+    display: flex;
+    flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+
+ }
+ .line{
+    height: 1px;
+    width: 150px;
+    background-color: black;
+ }
+ .lineor{
+    font-size: 16px;
+ }
+ .btndivv{
+    padding-left: 36px;
+    padding-right: 36px;
+ }
+ .lastdiv{
+ 
+    align-items: center;
+   margin-top: 24px;
+    padding-bottom: 24px;
+ }
+ .loginto{
+    text-decoration: none;
+ }
+ .lastparagraph{
+    margin-top: 10px;
+ }
+ /* .lastpara{
+    padding
+ } */
