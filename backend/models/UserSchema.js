@@ -62,7 +62,7 @@ const UserSchema = new mongoose.Schema({
     },
     industry:{
         type:String,
-    },
+    }
 
 
 

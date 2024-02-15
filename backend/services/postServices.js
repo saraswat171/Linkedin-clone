@@ -13,10 +13,10 @@ exports.userPosts = async (req) => {
     }
     catch (err) { throw err; }
 };
-exports.getPosts = async (req) => {
+exports.getPosts = async (params) => {
 
     try {
-        const { id } = req.params; //userId
+        const { id } = params; //userId
         const postData = await PostModel.find({ user: id }).populate({ path: 'user', select: 'name' });
         if (postData.length == 0) {
             throw new CustomError("No post Found", 404)
@@ -30,11 +30,11 @@ exports.getPosts = async (req) => {
     }
 };
 
-exports.deletPosts = async (req) => {
+exports.deletPosts = async (params , query) => {
 
     try {
-        const { postId } = req.params; //postId
-        const userId= req.query.userId;
+        const { postId } = params; //postId
+        const userId= query.userId;
         console.log(postId)
         if(userId == await PostModel.findById(postId).user){
             const delPost = await PostModel.findByIdAndDelete(postId);
@@ -50,11 +50,11 @@ exports.deletPosts = async (req) => {
         throw err;
     }
 };
-exports.updatePost = async (req) => {
+exports.updatePost = async (params , query) => {
 
     try {
-        const { postId } = req.params; //postId
-        const userId= req.query.userId;
+        const { postId } = params; //postId
+        const userId= query.userId;
         console.log(postId)
         console.log(req.body)
         const { title, body } = req.body;

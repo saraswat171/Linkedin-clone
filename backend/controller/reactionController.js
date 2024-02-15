@@ -4,7 +4,7 @@ const { reactionServices } = require("../services");
 
 exports.uploadingReaction=async(req,res)=>{
     try{
-        const response = await reactionServices.uploadReaction(req);
+        const response = await reactionServices.uploadReaction(req.params , req.query , req.body);
         console.log("first",response)
         return res.status(201).json(response);
     }
@@ -15,7 +15,7 @@ exports.uploadingReaction=async(req,res)=>{
 };
 exports.uploadingCommentReaction=async(req,res)=>{
     try{
-        const response = await reactionServices.uploadCommentReaction(req);
+        const response = await reactionServices.uploadCommentReaction(req.params , req.query , req.body);
         console.log("first",response)
         return res.status(201).json(response);
     }

@@ -5,25 +5,25 @@ const EducationSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: true
+        required : true
     },
 
     name: {
         type: String,
-        require: true
+        required : true
     },
     degree: {
         type: String,
-        require: true
+        required : true
     },
     fieldOfStudy: {
         type: String,
-        require: true
+        required : true
     },
 
     Grade: {
         type: Number,
-        require: true
+        required : true
     },
     description: {
         type: String,
@@ -34,7 +34,7 @@ const EducationSchema = new mongoose.Schema({
     },
     endDate: {
         type: Date,
-        require: true
+        required : true
     },
 
 

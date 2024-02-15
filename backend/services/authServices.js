@@ -3,10 +3,10 @@ const CustomError = require('../libs/error')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-exports.createUser=async(req)=>{
+exports.createUser=async(body)=>{
     try {
-        console.log("first")
-        const { name, email, password } = req.body;
+        console.log("first" , body)
+        const { name, email, password } = body;
         if(!name || !email || !password ){
             throw new CustomError('Fields are required' , 400)
         }
@@ -29,9 +29,9 @@ exports.createUser=async(req)=>{
     }
 };
 
-exports.loginUser=async(req)=>{
+exports.loginUser=async(body)=>{
     try {
-        const { email, password } = req.body;
+        const { email, password } = body;
         if(!email || !password ){
             throw new CustomError('Fields are required' , 400)
         }

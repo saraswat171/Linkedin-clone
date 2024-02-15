@@ -5,7 +5,7 @@ const SkillsSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: true
+        required : true
     },
     skills: {
         type: String,
@@ -14,16 +14,5 @@ const SkillsSchema = new mongoose.Schema({
 module.exports = mongoose.model('skills', SkillsSchema)
 
 
-          skillsSchema:
-          type: object
-          properties:
-            uuid:
-              type: string
-              format: uuid
-            user:
-              type: string
-              $ref: '#/components/schemas/UserSchema'
-              format: uuid
-            skills:
-              type: string
+         
               

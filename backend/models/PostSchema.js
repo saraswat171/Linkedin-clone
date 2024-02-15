@@ -4,17 +4,17 @@ const PostSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: true
+        required : true
     
     },
 
     title: {
         type: String,
-        require: true
+        required : true
     },
     body: {
         type: String,
-        require: true
+        required : true
     },
 
     createAt: {

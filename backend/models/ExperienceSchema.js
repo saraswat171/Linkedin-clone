@@ -4,11 +4,11 @@ const ExperienceSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: true
+        required : true
     },
     companyname:{
         type:String,
-        require: true
+        required : true
     },
     title:{
         type:String,
@@ -21,7 +21,7 @@ const ExperienceSchema = new mongoose.Schema({
     },
     startDate: {
         type: Date,
-        require: true
+        required : true
     },
     endDate: {
         type: Date,

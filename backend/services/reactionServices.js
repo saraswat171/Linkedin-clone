@@ -1,14 +1,14 @@
 const ReactionModel = require('../models/ReactionSchema')
 const CustomError = require('../libs/error')
-exports.uploadReaction= async(req)=>{
+exports.uploadReaction= async(params , query ,body)=>{
 
    
     // userId exists in mongodb && postId exists
     try { 
-        const {postId} = req.params; 
+        const {postId} =params; 
 
-        const userId= req.query.userId;
-        const {type} =req.body;
+        const userId= query.userId;
+        const {type} =body;
         console.log(userId , postId)
         const newReaction = await ReactionModel.create({userId:userId , postId:postId , type:type})
         console.log(newReaction)
@@ -20,15 +20,15 @@ exports.uploadReaction= async(req)=>{
     }
 
 };
-exports.uploadCommentReaction= async(req)=>{
+exports.uploadCommentReaction= async(params , query ,body)=>{
 
    
     // userId exists in mongodb && postId exists
     try {console.log("hjjhk")
-        const {commentId} = req.params; 
+        const {commentId} = params; 
 
-        const userId= req.query.userId;
-        const {type} =req.body;
+        const userId= query.userId;
+        const {type} =body;
         console.log(userId , commentId)
         const newReaction = await ReactionModel.create({userId:userId , commentId:commentId , type:type})
         console.log(newReaction)

@@ -6,7 +6,7 @@ const ReactionSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: true
+        required : true
     },
     postId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,11 +20,8 @@ const ReactionSchema = new mongoose.Schema({
     },
     type: { type: String ,
      
-        require: true
+        required : true
     },
-    createAt: {
-        type: Date,
-        default: Date.now,
-    },
-})
+  
+},{timestamps:true })
 module.exports = mongoose.model("reactions", ReactionSchema)

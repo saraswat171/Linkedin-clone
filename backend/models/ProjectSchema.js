@@ -4,11 +4,11 @@ const ProjectSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: UsersModel,
-        require: true
+        required : true
     },
     name: {
         type: String,
-        require: true
+        required : true
     },
     title: {
         type: String,
@@ -19,14 +19,14 @@ const ProjectSchema = new mongoose.Schema({
     },
     technology: {
         type: String,
-        require: true
+        required : true
     },
     link: {
         type: String,
     },
     startDate: {
         type: Date,
-        require: true
+        required : true
     },
     endDate: {
         type: Date,

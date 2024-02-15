@@ -3,7 +3,7 @@ const { authServices } = require("../services")
 
 exports.SignUpUser = (async(req,res)=>{
     try{
-        const response = await authServices.createUser(req);
+        const response = await authServices.createUser(req.body);
         return res.status(201).json({message:"Success"}); 
     }
     catch(e){
@@ -12,7 +12,7 @@ exports.SignUpUser = (async(req,res)=>{
 });
 exports.SignInUser=(async(req,res)=>{
     try{
-        const response = await authServices.loginUser(req);
+        const response = await authServices.loginUser(req.body);
         return res.status(200).json(response);
     }
     catch(e){

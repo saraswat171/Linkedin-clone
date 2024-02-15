@@ -8,6 +8,12 @@ const commentRoutes = require('./routes/commentRoutes')
 const reactionRoutes = require('./routes/reactionRoutes')
 const app = express();
 require('dotenv').config()
+// port validation
+
+if(!process.env.PORT){
+  process.exit(0);
+}
+
 // Connect to MongoDB
 connectDB();
 
@@ -27,7 +33,7 @@ app.use('/', userRoutes);
 app.use('/', postRoutes);
 app.use('/',commentRoutes);
 app.use('/',reactionRoutes);
-// const PORT =  || 8080;
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server is running on port ${process.env.PORT} || 8080`);
 });

@@ -12,7 +12,7 @@ exports.uploadPosts = async(req,res)=>{
 
 exports.fetchPosts = async(req,res)=>{
     try{
-        const response = await postServices.getPosts(req);
+        const response = await postServices.getPosts(req.params);
         return res.status(200).json(response)
     }
     catch(e){
@@ -22,7 +22,7 @@ exports.fetchPosts = async(req,res)=>{
 
 exports.deletingPosts = async(req,res)=>{
     try{
-        const response = await postServices.deletPosts(req);
+        const response = await postServices.deletPosts(req.params , req.query);
         return res.status(200).json(response);
     }
     catch(e){
@@ -31,7 +31,7 @@ exports.deletingPosts = async(req,res)=>{
 };
 exports.updatingPost = async(req,res)=>{
     try{
-        const response = await postServices.updatePost(req);
+        const response = await postServices.updatePost(req.params , req.query);
         return res.status(200).json(response);
     }
     catch(e){
