@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     username: {
         type: String,
@@ -11,11 +11,11 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        require: true
+        required: true
     },
     password: {
         type: String,
-        require: true
+        required: true
     },
     address: {
         type: Object,
@@ -63,12 +63,9 @@ const UserSchema = new mongoose.Schema({
     industry:{
         type:String,
     },
-    createAt: {
-        type:Date,
-        default:Date.now,
-    },
+
 
 
 })
-
+UserSchema.set('timestamps', true)
 module.exports = mongoose.model('users', UserSchema)
