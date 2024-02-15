@@ -28,7 +28,7 @@ exports.uploadingCommentReaction=async(req,res)=>{
 
 exports.fetchCommentReaction = async(req,res)=>{
     try{
-        const response = await reactionServices.getCommentReaction(req);
+        const response = await reactionServices.getCommentReaction(req.params);
         return res.status(200).json(response)
     }
     catch(e){
@@ -38,7 +38,7 @@ exports.fetchCommentReaction = async(req,res)=>{
 
 exports.fetchReaction = async(req,res)=>{
     try{
-        const response = await reactionServices.getReaction(req);
+        const response = await reactionServices.getReaction(req.params);
         return res.status(200).json(response)
     }
     catch(e){
@@ -48,7 +48,7 @@ exports.fetchReaction = async(req,res)=>{
 
 exports.deletingReaction = async(req,res)=>{
     try{
-        const response = await reactionServices.deleteReaction(req);
+        const response = await reactionServices.deleteReaction(req.params , req.query );
         return res.status(200).json(response);
     }
     catch(e){
@@ -57,7 +57,7 @@ exports.deletingReaction = async(req,res)=>{
 };
 exports.updatingReaction = async(req,res)=>{
     try{
-        const response = await reactionServices.updateReaction(req);
+        const response = await reactionServices.updateReaction(req.params , req.query , req.body);
         return res.status(200).json(response);
     }
     catch(e){

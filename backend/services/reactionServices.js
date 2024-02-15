@@ -42,13 +42,13 @@ exports.uploadCommentReaction= async(params , query ,body)=>{
 };
 
 
-exports.getReaction = async(req)=>{
+exports.getReaction = async(params)=>{
   
     try {
-        const {postId}=req.params; 
+        const {postId}=params; 
         const ReactionData = await ReactionModel.find({postId : postId});
         console.log("first" , ReactionData)
-        if(ReactionData.length == 0){
+        if(ReactionData.length === 0){
             throw new CustomError("No reaction found" , 404)
         }
       return ReactionData;
@@ -59,13 +59,13 @@ exports.getReaction = async(req)=>{
     }
 };
 
-exports.getCommentReaction = async(req)=>{
+exports.getCommentReaction = async(params)=>{
   
     try {
-        const {commentId}=req.params; 
+        const {commentId}=params; 
         const ReactionData = await ReactionModel.find({commentId : commentId});
         console.log("first" , ReactionData)
-        if(ReactionData.length == 0){
+        if(ReactionData.length === 0){
             throw new CustomError("No reaction found" , 404)
         }
       return ReactionData;
@@ -76,16 +76,16 @@ exports.getCommentReaction = async(req)=>{
     }
 };
 
-exports.updateReaction=async(req)=>{
+exports.updateReaction=async(params , query ,body)=>{
   
     try{
         console.log("we are at comment")
-        const {reactionId} = req.params; 
-        const userId= req.query.userId;
+        const {reactionId} = params; 
+        const userId= query.userId;
         const { type} = req.body;
         const user= await ReactionModel.findById(reactionId)
         console.log("first",userId==user.userId)
-        if(userId == user.userId){
+        if(userId === user.userId){
             const updateReaction= await ReactionModel.findByIdAndUpdate(reactionId,{type:type}, {new:true});
             return updateReaction;
         }
@@ -99,13 +99,13 @@ exports.updateReaction=async(req)=>{
     }
 };
 
-exports.deleteReaction=async(req)=>{
+exports.deleteReaction=async(params , query )=>{
    
   
     try{
-        const {reactionId} = req.params; 
-        const userId= req.query.userId;
-        if(userId == await ReactionModel.findById(reactionId).userId){
+        const {reactionId} = params; 
+        const userId= query.userId;
+        if(userId === await ReactionModel.findById(reactionId).userId){
             const delReaction = await ReactionModel.findByIdAndDelete(reactionId);
             return delReaction;
         }

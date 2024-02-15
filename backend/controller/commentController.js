@@ -3,7 +3,8 @@ const { commentServices } = require("../services")
 
 exports.uploadingComment=async(req,res)=>{
     try{
-        const response = await commentServices.uploadcomment(req);
+        
+        const response = await commentServices.uploadcomment(req.params, req.query , req.body);
         console.log("first",response)
         return res.status(201).json(response);
     }
@@ -25,7 +26,7 @@ exports.fetchComments = async(req,res)=>{
 
 exports.deletingComments = async(req,res)=>{
     try{
-        const response = await commentServices.deleteComments(req);
+        const response = await commentServices.deleteComments(req.params , req.query);
         return res.status(200).json(response);
     }
     catch(e){
@@ -34,7 +35,7 @@ exports.deletingComments = async(req,res)=>{
 };
 exports.updatingComments = async(req,res)=>{
     try{
-        const response = await commentServices.updateComment(req);
+        const response = await commentServices.updateComment(req.params, req.query , req.body);
         return res.status(200).json(response);
     }
     catch(e){

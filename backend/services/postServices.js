@@ -18,7 +18,7 @@ exports.getPosts = async (params) => {
     try {
         const { id } = params; //userId
         const postData = await PostModel.find({ user: id }).populate({ path: 'user', select: 'name' });
-        if (postData.length == 0) {
+        if (postData.length === 0) {
             throw new CustomError("No post Found", 404)
         }
 
@@ -36,7 +36,7 @@ exports.deletPosts = async (params , query) => {
         const { postId } = params; //postId
         const userId= query.userId;
         console.log(postId)
-        if(userId == await PostModel.findById(postId).user){
+        if(userId === await PostModel.findById(postId).user){
             const delPost = await PostModel.findByIdAndDelete(postId);
             return delPost;
         }
@@ -58,7 +58,7 @@ exports.updatePost = async (params , query) => {
         console.log(postId)
         console.log(req.body)
         const { title, body } = req.body;
-        if(userId == await PostModel.findById(postId).user){
+        if(userId === await PostModel.findById(postId).user){
             const updatePost = await PostModel.findByIdAndUpdate(postId, { title: title, body: body }, { new: true });
             return updatePost;
         }

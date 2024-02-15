@@ -499,6 +499,21 @@ paths:
           schema:
             type: object
             format: JSON
+        - name: 'postId'
+          in: path
+          required: true
+          description: User token
+          example: {eYgxyaugxsagx.isaxbkasjbxkajsnxjasoxh.ducboauhcaishcia, iat:"", expat:""}
+          schema:
+            type: object
+            format: JSON    
+        - name: 'commentId'
+          in: query
+          required: true
+          description: commentId
+          example: jkasnjsaanxjakjsxnlas
+          schema:
+            type: string     
       summary: Edit the post
       description: Updates the post
       requestBody:
@@ -635,7 +650,80 @@ paths:
                 properties:
                   error:
                     type: string
-   
+    delete:
+      tags:
+        - Comment
+      parameters:
+        - name: 'user'
+          in: header
+          required: true
+          description: User token
+          example: {id: "xhuaiuhsiuxh.aixsbisu.sxiabixia", iat:"", expat:""}
+          schema:
+            type: object
+            format: JSON
+        - name: 'commentId'
+          in: path
+          required: true
+          description: commentId
+          example: jkasnjsaanxjakjsxnlas
+          schema:
+            type: string 
+          
+      summary: Delete the post
+      description: Deletes the post
+      responses:
+        '200':
+          description: Post deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Post deleted successfully.
+        '400':
+          description: Invalid request payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: The provided postId is not valid
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Post not found
+        "498":
+          description: Authentication token not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: The provided userID is null.
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+    
+          
 components:
   schemas:
     UserSchema:

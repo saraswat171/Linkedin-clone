@@ -2,20 +2,21 @@ const CommentModel = require('../models/CommentsSchema')
 const CustomError = require('../libs/error')
 const UsersModel = require('../models/UserSchema')
 const PostModel = require('../models/PostSchema')
-exports.uploadcomment = async(req)=>{
+exports.uploadcomment = async(params,query, body)=>{
 
   
     try {
-        const {postId} = req.params; 
-        const userId= req.query.userId;
-        const {body} =req.body;
-        console.log(userId , postId)
+        const {postId} = params; 
+        const userId= query.userId;
+        const databody = body.body;
+        
         // userId exists in mongodb && postId exists
-        if( !  await PostModel.findOne({postId})){
+        
+        if( ! await PostModel.findOne({postId})){
             throw new CustomError('No such post exists' , 404)
         }
 
-        const newComment = await CommentModel.create({userId:userId , postId:postId , body:body})
+        const newComment = await CommentModel.create({userId:userId , postId:postId , body:databody})
         console.log(newComment)
         return newComment;
     }
@@ -45,10 +46,10 @@ exports.getComments = async(req)=>{
     }
 };
 
-exports.deleteComments=async(req)=>{
+exports.deleteComments=async(params , query)=>{
     try{
-        const {commentId} = req.params; 
-        const userId= req.query.userId;
+        const {commentId} = params; 
+        const userId= query.userId;
         if(userId == await CommentModel.findById(commentId).userId){
             const delComment = await CommentModel.findByIdAndDelete(commentId);
             return delComment;
@@ -59,16 +60,16 @@ exports.deleteComments=async(req)=>{
         throw err;
     }
 };
-exports.updateComment=async(req)=>{
+exports.updateComment=async(params,query, body)=>{
     try{
         // console.log("we are at comment")
-        const {commentId} = req.params; 
-        const userId= req.query.userId;
-        const { body} = req.body;
+        const {commentId} = params; 
+        const userId= query.userId;
+        const databody = body.body;
         const user= await CommentModel.findById(commentId)
         // console.log("first",userId==user.userId)
         if(userId == user.userId){
-            const updateComment= await CommentModel.findByIdAndUpdate(commentId,{body:body}, {new:true});
+            const updateComment= await CommentModel.findByIdAndUpdate(commentId,{body:databody}, {new:true});
             return updateComment;
         }
         throw new CustomError("Unauthorised", 401)

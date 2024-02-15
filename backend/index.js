@@ -10,9 +10,9 @@ const app = express();
 require('dotenv').config()
 // port validation
 
-if(!process.env.PORT){
-  process.exit(0);
-}
+// if(!process.env.PORT){
+//   process.exit();
+// }
 
 // Connect to MongoDB
 connectDB();
