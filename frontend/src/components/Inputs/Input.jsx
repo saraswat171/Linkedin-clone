@@ -1,7 +1,7 @@
 import React from 'react';
 import './Input.css'
 import TextField from '@mui/material/TextField';
-const Input = ({label,type, name, placeholder, value, onChange }) => {
+const Input = ({label,type,padding, name, value, onChange }) => {
     return (
        
             
@@ -16,7 +16,8 @@ const Input = ({label,type, name, placeholder, value, onChange }) => {
                         required 
                     ></input> */}
                     <label className='label'>{label}</label>
-                      <TextField type={type} error={false}  sx={{ height:'30px' }}   size='small' />
+                      <TextField type={type} error={false}  sx={{ padding }}  value={value} 
+                        onChange={onChange}  required  name={name}   size='small' />
               </div>
             
               

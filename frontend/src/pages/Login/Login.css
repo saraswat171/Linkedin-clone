@@ -1,0 +1,128 @@
+.login-container{
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+   
+
+    .Content{
+      
+       width: 1200px;
+       margin: auto;
+     
+        .header{
+            display: flex;
+            flex-direction: row;
+            padding-top: 12px;
+            padding-bottom: 16px;
+            justify-content: space-between;
+            margin-right: 100px;
+             .header-btn{
+                display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+         
+            .join{
+                text-decoration: none;
+                color: black;
+                width: 120px;
+                
+            }
+             }
+        }
+
+       .hero-login{
+        display: flex;
+        padding-top: 40px;
+        align-items: center;
+
+
+            .login-form{
+            padding-right: 42px;
+            }
+            .imagepage{
+                height: 560px;
+                width: 700px;
+            }
+       } 
+     }
+}
+.hero-content-login{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: white;
+    width: 400px;
+    /* height: 452px; */
+    border-radius: 5px;
+   
+   
+}
+.text-field-login{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+ 
+ }
+ .textbutton-login{
+   
+  
+    text-align: center;
+ }
+ .textbuttonpara-login{
+    margin-bottom: 16px;
+    margin-top: 16px;
+   
+  font-size: 12px;
+ }
+ .spantext-login{
+    color:#0B66C2;
+ }
+ .or-login{
+    display: flex;
+    flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+    
+   
+
+ }
+ .line-login{
+    height: 1px;
+    width: 150px;
+    background-color: black;
+ }
+ .lineor-login{
+    font-size: 16px;
+ }
+
+ .lastdiv-login{
+ 
+    align-items: center;
+   margin-top: 24px;
+    padding-bottom: 24px;
+ }
+ .loginto-login{
+    text-decoration: none;
+ }
+ .lastparagraph-login{
+    margin-top: 10px;
+ }
+ .forget-login{
+    text-decoration: none;
+    color: #0B66C2;
+    font-size: 15px;
+ }
+ .email-field{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+ }
+ .textwelcome{
+    color: #B24020;
+    font-size: 56px;
+ 
+   font-weight: 200;
+   font-style: normal;
+    
+
+ }

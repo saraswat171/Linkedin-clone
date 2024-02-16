@@ -5,16 +5,14 @@
     
 }
 
-#textfieldmui{
-    height: 32px;
-}
 .label{
     font-family:  Helvetica, Arial, sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
-    line-height: 24px;
+    /* line-height: 24px; */
     color: rgba(0, 0, 0, 0.9);
+    text-align: left;
 }
 
 /* .label{

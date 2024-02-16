@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt')
 exports.createUser=async(body)=>{
     try {
         console.log("first" , body)
-        const { name, email, password } = body;
-        if(!name || !email || !password ){
+        const { email, password } = body;
+        if( !email || !password ){
             throw new CustomError('Fields are required' , 400)
         }
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -17,7 +17,7 @@ exports.createUser=async(body)=>{
         if (existingUser) {
            throw new CustomError('email already exist' ,409);
         }
-        const newuser = await UsersModel.create({ name, email, password: hashedPassword });
+        const newuser = await UsersModel.create({  email, password: hashedPassword });
         console.log('newuser', newuser)
         return newuser
     }
