@@ -1,6 +1,6 @@
 
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
 import idnIcon from '../../Assets/icons/Linkedin-signuo-logo.png'
 import Button from '../../components/Button/Button'
@@ -8,8 +8,42 @@ import heroimage from '../../Assets/images/dxf91zhqd2z6b0bwg85ktm5s4.svg'
 
 import Adornment from '../../components/Adornment/Adornment'
 import { TextField, Box } from '@mui/material'
+import { loginUser } from '../../Redux/auth/authAction'
+import { useDispatch, useSelector } from 'react-redux'
 
-function Login() {
+const Login=()=> {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    function handlePassword(event) {
+      let new_pass = event.target.value;
+      setPassword(new_pass);
+  }
+    const logged = useSelector(state => state.auth.logged);
+  
+    const navigate = useNavigate();
+  
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+    try{
+      dispatch(loginUser({ email, password }));
+  
+    }
+    catch(err){
+      alert(err);
+    }
+    
+      
+    };
+   
+    
+    useEffect(()=>{
+      if(logged){
+        navigate('/Home')
+      }
+    },[logged ,navigate])
+
     return (
         <Box className='login-container'>
             <Box className='Content'>
@@ -24,20 +58,34 @@ function Login() {
                     <Box className='login-form'>
                         <Box className='textwelcome'>Welcome to your <br/> professional community
                         </Box>
-                        <Box className='hero-content-login'>
-                            <Box className='text-field-login'>
+                        <Box className='hero-content-login' component={'form'} onSubmit={handleSubmit}>
+                            <Box className='text-field-login' >
 
 
                                 <Box className='email-field'>
                                     <label className='label'>Email or phone number</label>
-                                    <TextField type='email' error={false} InputProps={{ style: { padding: '9px' } }} size='small' />
+                                    <TextField 
+                                    type='email' 
+                                    error={false} 
+                                    InputProps={{ style: { padding: '9px' } }} size='small'                                  
+                                    name='email'
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    />
                                 </Box>
 
 
 
 
 
-                                <Adornment label='Password ' height='55px' padding='9px' />
+                                <Adornment 
+                                label='Password' 
+                                height='55px' 
+                                padding='9px' 
+                                name='password'
+                                value={password}   
+                                onChange={handlePassword}
+                                />
 
 
                             </Box>

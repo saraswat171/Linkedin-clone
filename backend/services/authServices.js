@@ -5,20 +5,21 @@ const bcrypt = require('bcrypt')
 
 exports.createUser=async(body)=>{
     try {
-        console.log("first" , body)
+        
         const { email, password } = body;
         if( !email || !password ){
             throw new CustomError('Fields are required' , 400)
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+       
         const existingUser = await UsersModel.findOne({ email })
 
         console.log(existingUser)
         if (existingUser) {
            throw new CustomError('email already exist' ,409);
         }
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newuser = await UsersModel.create({  email, password: hashedPassword });
-        console.log('newuser', newuser)
+     
         return newuser
     }
 
@@ -31,6 +32,7 @@ exports.createUser=async(body)=>{
 
 exports.loginUser=async(body)=>{
     try {
+       
         const { email, password } = body;
         if(!email || !password ){
             throw new CustomError('Fields are required' , 400)
@@ -45,8 +47,8 @@ exports.loginUser=async(body)=>{
             const token = jwt.sign({ ID: user._id }, 'jwt-key');
 
             // res.cookie('token', token);
-            // res.json({ success: true, user, token });
-            return (user , token);
+           // res.json({ success: true, user, token });
+            return ({user , token});
         } else {
            throw new CustomError('Password is Incorrect', 400)
         }

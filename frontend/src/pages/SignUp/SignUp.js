@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import './SignUp.css'
 import idnIcon from '../../Assets/icons/Linkedin-signuo-logo.png'
 import Input from '../../components/Inputs/Input'
 import Button from '../../components/Button/Button'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Box } from '@mui/material'
 import Adornment from '../../components/Adornment/Adornment'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +19,7 @@ const SignUp =() =>{
  
 
  
-const navigate = useNavigate()
+
     function handlePassword(event) {
         let new_pass = event.target.value;
         setPassword(new_pass);
@@ -39,7 +39,7 @@ const navigate = useNavigate()
       
       };
       const success= useSelector((state)=>state.auth.success)
-      const error= useSelector((state)=>state.auth.error)
+     // const error= useSelector((state)=>state.auth.error)
       // useEffect(()=>{
       //   if(success===true){
       //       navigate('./Login')
@@ -99,7 +99,7 @@ const navigate = useNavigate()
         </Box>
       </Box>
       <DialogBox open={success}  />
-{error && <h1>{error}</h1>}
+
     </Box>
   )
 }
