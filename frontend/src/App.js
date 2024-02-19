@@ -1,12 +1,16 @@
 
 import './App.css';
-import Layout from './routes/Layout';
+import PostCreate from './components/PostCreate/PostCreate';
+// import Navbar from './components/Navbar/Navbar';
+ //import Layout from './routes/Layout';
 
 
 function App() {
   return (
     <div className="App">
-<Layout/>
+{/* <Layout/> */}
+{/* <Navbar/> */}
+<PostCreate/>
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import { FormControl ,OutlinedInput ,InputAdornment  } from '@mui/material'
+import {
+  OutlinedInput ,InputAdornment  } from '@mui/material'
 import React, { useState } from 'react'
 import './Adornment.css'
 function Adornment({label,padding , onChange}) {
@@ -11,9 +12,10 @@ function Adornment({label,padding , onChange}) {
         showPassword ? setShow('Show') : setShow('Hide');
     };
   return (
-    <FormControl  size='small' variant="outlined" >
-     <label className='label'>{label}</label>
-    <OutlinedInput onChange={onChange}
+
+<>
+<label className='label'>{label}</label>
+    <OutlinedInput onChange={onChange} size='small'
     sx={{padding ,marginTop:'5px' }}
       type={showPassword ? 'text' : 'password'}
       endAdornment={
@@ -21,7 +23,7 @@ function Adornment({label,padding , onChange}) {
           <button
            className='password-btn'
             onClick={handleClickShowPassword}
-            
+            type="button"
           
           >{show}
            
@@ -29,8 +31,8 @@ function Adornment({label,padding , onChange}) {
         </InputAdornment>
       }
      
-    />
-  </FormControl>
+    /></>
+
   )
 }
 

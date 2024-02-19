@@ -95,7 +95,7 @@ const Login=()=> {
                             <Box className='textbutton-login'>
 
 
-                                <Button name='Sign In' classname='btn' />
+                                <Button name='Sign In' type='submit' classname='btn' />
                             </Box>
                             <Box className='or-login'>
                                 <Box className='line'></Box>
@@ -104,9 +104,9 @@ const Login=()=> {
 
                             </Box>
                             <p className='textbuttonpara-login'>By clicking Agree & Join, you agree to the LinkedIn <span className='spantext'>User Agreement, Privacy Policy</span> , and <span className='spantext'>Cookie Policy</span>.</p>
-                            <Box className='btnBoxv-login'> <Button name='Continue With Google' classname='btnn' /></Box>
+                            <Box className='btnBoxv-login'> <Button name='Continue With Google'  type="button" classname='btnn' /></Box>
                             <Box className='lastBox-login'>
-                                <Box className='btnBoxv-login'> <Button name=' New to LinkedIn? Join now ' classname='btnn' /></Box>
+                                <Box className='btnBoxv-login'> <Button name=' New to LinkedIn? Join now '  type="button" classname='btnn' /></Box>
 
 
                             </Box>
