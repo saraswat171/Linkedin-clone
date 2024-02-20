@@ -36,7 +36,7 @@
     display: flex;
     gap: 8px;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
     margin-top: 10px;
 }
 

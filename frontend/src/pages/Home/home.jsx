@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-
+import Navbar from '../../components/Navbar/Navbar'
 import { useNavigate } from 'react-router-dom';
 
 import { logoutUser } from '../../Redux/auth/authAction';
+import PostCreate from '../../components/PostCreate/PostCreate';
+import PostCard from '../../components/PostCard/PostCard';
+import { Stack } from '@mui/material';
+import { fetchPostUser } from '../../Redux/post/postAction';
 
 function Home() {
   const dispatch = useDispatch();
@@ -18,21 +22,26 @@ console.log("logged value" , logged)
     dispatch(logoutUser());
     navigate('/Login');
   };
-
+  const postData = useSelector(state=>state.post.data)
+  console.log("data post", postData)
   useEffect(() => {
+    dispatch(fetchPostUser());
     if (!logged) {
       navigate('/Login');
     }
-  }, [logged, navigate]);
+  }, [logged, navigate , dispatch]);
 
   return (
-    <div className='container'>
-      <div className='headings'>
-        <h1 style={{color:'black'}}>Welcome !</h1>
-        <p>You are now logged in.</p>
-      </div>
+   <Stack flexDirection={'column'} gap={'20px'}>
+     <Navbar/>
+     <PostCreate/>
+     {postData?.map((post) => (
+        <PostCard key={post._id} body={post.body} title={post.title} images={post.images} user={post.user.name} />
+      ))}
       <button onClick={handleLogout}>Logout</button>
-    </div>
+   </Stack>
+    
+ 
   );
 }
 

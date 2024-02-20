@@ -16,11 +16,11 @@ export default function Hover({classt,name}) {
   const open = Boolean(anchorEl);
 
   return (
-    <div>
+    <div style={{display:'flex' , alignItems:'center'}}>
       
       <i class={classt}  aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
-        style={{color:'#666666' , fontSize:'15px' , }}
+        style={{color:'#666666' , fontSize:'15px' }}
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose} ></i>
       <Popover

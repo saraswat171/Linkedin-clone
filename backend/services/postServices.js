@@ -1,23 +1,23 @@
 const PostModel = require('../models/PostSchema')
 const CustomError = require('../libs/error')
-exports.userPosts = async (req) => {
+exports.userPosts = async ({title , body , files , id} )=> {
 
     try {
-        const { id } = req.params; // userId
-        const { title, body } = req.body;
-        const images = req.files.map((i) => { return i.path });
+       
+    
+        const images = files.map((i) => { return i.path });
         //  console.log('images' , images)
         const newPost = await PostModel.create({ title: title, body: body, user: id, images: images });
         console.log('newPost', newPost)
-        return newuser;
+        return newPost;
     }
     catch (err) { throw err; }
 };
-exports.getPosts = async (params) => {
+exports.getPosts = async () => {
 
     try {
-        const { id } = params; //userId
-        const postData = await PostModel.find({ user: id }).populate({ path: 'user', select: 'name' });
+     
+        const postData = await PostModel.find().populate({ path: 'user', select: 'name' });
         if (postData.length === 0) {
             throw new CustomError("No post Found", 404)
         }

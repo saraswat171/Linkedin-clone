@@ -8,9 +8,9 @@ const { postController } = require('../controller');
 
 const upload = multer({ dest: './uploads' })
 
-router.post('/posts/:id' ,upload.array('images'), postController.uploadPosts )
+router.post('/posts' ,authenticateJWT,upload.array('images'), postController.uploadPosts )
 
-router.get('/posts/:id' , postController.fetchPosts)
+router.get('/posts' , postController.fetchPosts)
 
 router.delete('/posts/:postId' , postController.deletingPosts)
 
