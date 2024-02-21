@@ -10,6 +10,7 @@ import PostCard from '../../components/PostCard/PostCard';
 import { Stack } from '@mui/material';
 import { fetchPostUser } from '../../Redux/post/postAction';
 
+
 function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,9 +37,10 @@ console.log("logged value" , logged)
      <Navbar/>
      <PostCreate/>
      {postData?.map((post) => (
-        <PostCard key={post._id} body={post.body} title={post.title} images={post.images} user={post.user.name} />
+        <PostCard postId={post._id} body={post.body} title={post.title} images={post.images} user={post.user.name} />
       ))}
       <button onClick={handleLogout}>Logout</button>
+     
    </Stack>
     
  

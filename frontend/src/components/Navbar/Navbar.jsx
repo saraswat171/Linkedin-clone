@@ -34,7 +34,7 @@ function Navbar() {
 
         <Toolbar sx={{ alignItems: 'center', gap: '20px' }} >
 
-          <Link href="/" sx={{ display:'flex' , flexDirection:'column',
+          <Link href="/Home" sx={{ display:'flex' , flexDirection:'column',
             alignItems: 'center', textDecoration: 'none',
 
             color: (theme) => theme.palette.grey[700],
@@ -45,16 +45,16 @@ function Navbar() {
             <Typography fontSize={'12px'} align="center"   >Home</Typography>
           </Link>
 
-          <Link href="/Login" sx={{ display:'flex' , flexDirection:'column',
+          <Link href="" sx={{ display:'flex' , flexDirection:'column',
             alignItems: 'center', textDecoration: 'none',
 
             color: (theme) => theme.palette.grey[700],
             "&:hover": { color: "#191919" },
             '&:active':{textDecoration:'underline' , textUnderlinePosition:'10px'}
           }}   >< PeopleAltIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
-            <Typography fontSize={'12px'} align="center">My Network</Typography>
+            <Typography fontSize={'12px'} width={'65px'} display={'block'} align="center">My Network</Typography>
           </Link>
-          <Link href="/Login" sx={{ display:'flex' , flexDirection:'column',
+          <Link href="" sx={{ display:'flex' , flexDirection:'column',
             alignItems: 'center', textDecoration: 'none',
 
             color: (theme) => theme.palette.grey[700],
@@ -64,7 +64,7 @@ function Navbar() {
             <Typography fontSize={'12px'} align="center">Jobs</Typography>
           </Link>
 
-          <Link href="/Login" sx={{ display:'flex' , flexDirection:'column',
+          <Link href="" sx={{ display:'flex' , flexDirection:'column',
             alignItems: 'center', textDecoration: 'none',
 
             color: (theme) => theme.palette.grey[700],
@@ -74,7 +74,7 @@ function Navbar() {
           <i class="fa-sharp fa-solid fa-comment-dots fa-flip-horizontal" style={{ height:'24px', width: '24px',display:'flex', alignItems: 'center',justifyContent:'center'} }></i>
             <Typography fontSize={'12px'} align="center">Messages</Typography>
           </Link>
-          <Link href="/Login" sx={{ display:'flex' , flexDirection:'column',
+          <Link href="" sx={{ display:'flex' , flexDirection:'column',
             alignItems: 'center', textDecoration: 'none',
 
             color: (theme) => theme.palette.grey[700],

@@ -2,17 +2,19 @@ const CommentModel = require('../models/CommentsSchema')
 const CustomError = require('../libs/error')
 const UsersModel = require('../models/UserSchema')
 const PostModel = require('../models/PostSchema')
-exports.uploadcomment = async(params,query, body)=>{
+exports.uploadcomment = async(params,userId, body)=>{
 
   
     try {
+        console.log("data back" , params )
         const {postId} = params; 
-        const userId= query.userId;
-        const databody = body.body;
+        
+        const databody =  Object.keys(body)[0];
+        console.log('databody: ', databody);
         
         // userId exists in mongodb && postId exists
         
-        if( ! await PostModel.findOne({postId})){
+        if( ! await PostModel.findById(postId)){
             throw new CustomError('No such post exists' , 404)
         }
 

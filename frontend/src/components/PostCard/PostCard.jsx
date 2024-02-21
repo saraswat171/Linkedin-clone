@@ -14,22 +14,28 @@ import RepeatOutlinedIcon from '@mui/icons-material/RepeatOutlined';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbUpOffAltRoundedIcon from '@mui/icons-material/ThumbUpOffAltRounded';
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Divider, Stack } from '@mui/material';
+import { Button, Divider,  Stack } from '@mui/material';
+import { Carousel } from 'react-responsive-carousel';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Comment from '../Comments/Comment';
+import PublicIcon from '@mui/icons-material/Public';
+import CommentCard from '../CommentCard/CommentCard';
+
+export default function PostCard({body , title , images , user,postId}) {
 
 
-
-
-export default function PostCard({body , title , images , user}) {
-
-
-     
+ 
  const [seemore , setSeemore]= React.useState(true)
-
+ const [seecomment, setSeecomment]= React.useState(false)
+ const handleCommentClick=()=>{
+    setSeecomment(!seecomment)
+ }
     
     return (
       <Stack margin={'auto'} >
-          <Card sx={{ width: 555 }}>
-            <CardHeader
+          <Card sx={{ width: 555 ,boxShadow:'none' }} >
+            <CardHeader  sx={{ pl:'16px' , pt:'12px',pb:'8px',pr:'16px' }}
                 avatar={
                     <Avatar aria-label="recipe" sx={{ height: '50px', width: '50px' }}>
                         <img alt=''></img>
@@ -41,16 +47,31 @@ export default function PostCard({body , title , images , user}) {
                         < Typography sx={{ color: '' }}>Follow</Typography>
                     </IconButton>
                 }
-                title={user}
-                subheader="September 14, 2016"
+                // {`${user} `}
+                title={<Stack flexDirection={'row'} alignItems={'center'} gap={'5px'}>
+                  
+                    <Typography fontSize={'14px'} color={'Black'}> {user}</Typography>
+                 <FiberManualRecordIcon sx={{height:'5px', width:'5px'}}/>
+                <Typography fontSize={'14px'} color={'grey'}> 1st +</Typography>
+                </Stack>}
+                subheader={
+                    <Stack flexDirection={'column'}>
+                        <Typography fontSize={'12px'} color={'grey'}>Designation</Typography>
+                        <Stack flexDirection={'row'} alignItems={'center'} gap={'5px'}>
+                            <Typography fontSize={'12px'} color={'grey'}>2hr</Typography>
+                            <FiberManualRecordIcon sx={{height:'5px', width:'5px'}}/>
+                            <PublicIcon sx={{height:'16px', width:'16px'}}/>
+                        </Stack>
+                    </Stack>
+                }
             />
-            <CardContent>
+            <CardContent  sx={{ pl:'12px' , pt:'8px',pb:'8px',pr:'16px' }}>
                 <Typography fontSize={'15px'} color="text.secondary" >
                    {title}
                 </Typography>
            
-                <Typography fontSize={'15px'} color="text.secondary"  width= {seemore ? '30ch':'100%'} height={'auto'} sx={{overflow:'hidden'}}>
-             {body}
+                <Typography fontSize={'15px'} color="text.secondary"   sx={{overflow:'hidden',height:seemore? '20px' : 'auto' , wordBreak:'break-word'}}>
+        {body}
                 </Typography>
              
                 
@@ -78,13 +99,47 @@ export default function PostCard({body , title , images , user}) {
            }
           
            )}   */}
-           {(images.length !== 0)  && <CardMedia
+           {/* {(images.length === 1)  ? <CardMedia
         component="img"
         height="194"
-        image={`http://localhost:8080/${images[0]}`}
+        image={`http://localhost:8080/${images}`}
         alt="post image"
-      />}
-            <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      /> : <CardMedia  
+      height="194"> <Stack direction="column" spacing={2} sx={{ width: '555px', overflow: 'auto' }}  justifyContent="center" > 
+      {images.map((image) => (
+        <img src={`http://localhost:8080/${image}`} alt='' key={image} />
+      ))}
+    </Stack></CardMedia>} */}
+    {/* <CardMedia
+        component="img"
+        height="194"
+        image={`http://localhost:8080/${images[currentImageIndex]}`}
+        alt="post image"
+      />
+      {images.length > 1 && (
+       <Carousel
+          value={currentImageIndex}
+          onChange={handleSliderChange}
+          min={0}
+          max={images.length - 1}
+          step={1}
+          aria-label="Image slider"
+        />
+      )} */}
+      <Carousel>
+        {images.map((image,index)=>(
+            <CardMedia sx={{pb:0}} 
+                key={index}
+                component="img"
+                 height={'auto'}
+        image={`http://localhost:8080/${image}`}
+        alt="post image"
+            /> 
+         
+              
+        ))}
+      </Carousel >
+            <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl:'12px' , pt:'8px',pb:'8px',pr:'16px'}}>
                 <Typography fontSize={'12px'} color="text.secondary" display={'flex'} alignItems={'center'} gap={'3px'}
                 >
                     <ThumbUpOutlinedIcon fontSize='16px' className='like-icon' /> 100
@@ -94,16 +149,16 @@ export default function PostCard({body , title , images , user}) {
                 </Typography>
                
             </CardContent>
-            <CardContent>
-            <Divider/>
-            </CardContent>
-                 
+           
+            <Divider className='divider' sx={{marginLeft:'16px',
+    marginRight: '16px',padding:'0px'
+   }}/>  
             <CardActions sx={{ display: 'flex', justifyContent: 'space-around' }}>
                 <IconButton sx={{ gap: '10px' }} >
                     <ThumbUpOffAltRoundedIcon fontSize='20px' />
                     <Typography fontSize={'14px'}>Like</Typography>
                 </IconButton>
-                <IconButton sx={{ gap: '10px' }} >
+                <IconButton sx={{ gap: '10px' }} onClick={handleCommentClick} >
 
                     <i class="fa-regular fa-comment" style={{ height: '20px', width: '20px' }}></i>
                     <Typography fontSize={'14px'}>Comment</Typography>
@@ -122,9 +177,12 @@ export default function PostCard({body , title , images , user}) {
                 </IconButton>
             </CardActions>
 
+           {seecomment &&  <Comment postId={postId}/>}
+           {seecomment &&  <CommentCard postId={postId}/>}
 
 
         </Card>
+        
       </Stack>
     );
 }

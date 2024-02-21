@@ -3,8 +3,12 @@ const { commentServices } = require("../services")
 
 exports.uploadingComment=async(req,res)=>{
     try{
-        
-        const response = await commentServices.uploadcomment(req.params, req.query , req.body);
+      
+        if (!res.locals.isAuthenticated) {
+            throw new CustomError("User not authorised", 401)
+        }
+            const userId = req.user.ID;
+        const response = await commentServices.uploadcomment(req.params, userId, req.body);
         console.log("first",response)
         return res.status(201).json(response);
     }

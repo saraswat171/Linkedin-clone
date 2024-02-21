@@ -74,15 +74,16 @@ function PostCreate() {
                 </Box>
                 <Box className="post-bottom">
                     <Box className="list-item">
-                        <i class="fa-solid fa-image"></i>
+                        <i class="fa-solid fa-image" style={{color:'#378FE9'}}></i>
+
                         <h1 className='post-heading'>Media</h1>
                     </Box>
                     <Box className="list-item">
-                        <i class="fa-solid fa-briefcase"></i>
+                        <i class="fa-solid fa-calendar-days"  style={{color:'#C37D16'}}></i>
                         <h1 className='post-heading'>Job</h1>
                     </Box>
                     <Box className="list-item">
-                        <i class="fa-regular fa-newspaper"></i>
+                        <i class="fa-regular fa-newspaper" style={{color:'#E06847'}}></i>
 
                         <h1 className='post-heading'>Write a article</h1>
                     </Box>
