@@ -49,7 +49,7 @@ export default function PostCard({body , title , images , user}) {
                    {title}
                 </Typography>
            
-                <Typography fontSize={'15px'} color="text.secondary"  height= {seemore ? '40px':'auto'} sx={{overflow:'hidden'}}>
+                <Typography fontSize={'15px'} color="text.secondary"  width= {seemore ? '30ch':'100%'} height={'auto'} sx={{overflow:'hidden'}}>
              {body}
                 </Typography>
              
