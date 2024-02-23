@@ -24,7 +24,7 @@ console.log("logged value" , logged)
     navigate('/Login');
   };
   const postData = useSelector(state=>state.post.data)
-  console.log("data post", postData)
+  console.log('postData: ', postData);
   useEffect(() => {
     dispatch(fetchPostUser());
     if (!logged) {

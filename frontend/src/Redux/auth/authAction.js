@@ -25,6 +25,7 @@ export const loginUser = createAsyncThunk(
       const response = await axios.post('http://localhost:8080/logininfo', { email, password });
 
       console.log('response redux', response.data)
+      localStorage.setItem('user',response.data.user._id );
       localStorage.setItem('logged', 'true'); // Store logged state in local storage
       localStorage.setItem('token', response.data.token);
       return response.data;
@@ -43,6 +44,7 @@ export const logoutUser = createAsyncThunk(
     console.log('logout')
     localStorage.removeItem('logged'); // Remove logged state from local storage
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
    const response= await axios.post('http://localhost:8080/logout');
     return response.data;
   }

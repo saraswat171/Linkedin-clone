@@ -11,6 +11,7 @@ export const authSlice = createSlice({
       success:false,
       logged: localStorage.getItem('logged') === 'true',
       token: localStorage.getItem('token'),
+      userId:localStorage.getItem('user')
     },
     reducers: {
         toggleSuccess:(state,action)=>{
@@ -42,7 +43,7 @@ export const authSlice = createSlice({
           state.loading = false;
           state.user = action.payload.user;
          state.logged=true;
-         console.log('state', state.user)
+         console.log('state data', state.user._id)
          state.token = action.payload.token;
         })
         .addCase(loginUser.rejected, (state, action) => {

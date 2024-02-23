@@ -38,7 +38,7 @@ exports.getComments = async(req)=>{
         query= { postId: postId, createAt: { $gte: (new Date(createAt)) } }
        }
         // console.log(postId); console.log(postId);   console.log("first",createAt)
-       const commentData = await CommentModel.find(query).sort({createdAt :-1}).limit(2);
+       const commentData = await CommentModel.find(query).populate(  'userId','name' ).sort({createdAt :-1}).limit(2);
         console.log(commentData)
       return commentData;
      

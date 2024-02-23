@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { commentPostAction } from "./commentType";
+import { commentFetchAction, commentPostAction } from "./commentType";
 export const commentUser = createAsyncThunk(
     commentPostAction,
     async (data, { rejectWithValue, getState }) => {
@@ -26,3 +26,19 @@ export const commentUser = createAsyncThunk(
         }
     }
 );
+
+export const fetchCommentUser = createAsyncThunk(commentFetchAction, async (postId , {rejectWithValue})=>{
+    // const postId=datatofetch.postId;
+
+  try{
+    const res =await axios.get(`http://localhost:8080/post/${postId}/comments`);
+    const data =  res.data;
+
+    return {postId,data};
+  }
+  catch (err) {
+           
+    return rejectWithValue(err.response.data);
+
+}
+})

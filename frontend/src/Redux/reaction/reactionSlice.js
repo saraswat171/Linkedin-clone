@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { commentUser, fetchCommentUser } from "./commentAction";
+import { fetchReactionUser, postReactionUser } from "./reactionAction";
 
 
-export const commentSlice = createSlice({
-    name: 'comment',
+export const reactionSlice = createSlice({
+    name: 'reaction',
     initialState: {
-      commentdata:{},
       loading: false,
       error: null,
       success:false,
@@ -16,34 +15,33 @@ export const commentSlice = createSlice({
     },
     extraReducers: (builder) => {
       builder
-        .addCase(commentUser.pending, (state) => {
+        .addCase(postReactionUser.pending, (state) => {
           state.loading = true;
           state.error = null;
         })
-        .addCase(commentUser.fulfilled, (state) => {
+        .addCase(postReactionUser.fulfilled, (state) => {
           state.loading = false;
           state.success=true;
           console.log(' state' , state.success)
           
         })
-        .addCase(commentUser.rejected, (state, action) => {
+        .addCase(postReactionUser.rejected, (state, action) => {
           state.loading = false;
           state.error = action.error.message;
           console.log("errorrrr" , state.error)
         })
-        .addCase(fetchCommentUser.pending, (state) => {
+        .addCase(fetchReactionUser.pending, (state) => {
           state.loading = true;
           state.error = null;
        
         })
-        .addCase(fetchCommentUser.fulfilled, (state,action) => {
+        .addCase(fetchReactionUser.fulfilled, (state,action) => {
           state.loading = false;
-          state.commentdata[action.payload.postId]=action.payload.data
-          console.log('commentdata: ', state.commentdata);
-       
+          state.data = action.payload;
+          console.log("action",state.data)
         
         })
-        .addCase(fetchCommentUser.rejected, (state, action) => {
+        .addCase(fetchReactionUser.rejected, (state, action) => {
           state.loading = false;
           state.error = action.payload;
          
@@ -52,4 +50,4 @@ export const commentSlice = createSlice({
     },
   });
 
-  export default commentSlice.reducer;
+  export default reactionSlice.reducer;

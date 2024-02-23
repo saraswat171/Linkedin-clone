@@ -4,12 +4,18 @@ const { reactionServices } = require("../services");
 
 exports.uploadingReaction=async(req,res)=>{
     try{
-        const response = await reactionServices.uploadReaction(req.params , req.query , req.body);
+        if (!res.locals.isAuthenticated) {
+            throw new CustomError("User not authorised", 401)
+        }
+            const userId = req.user.ID;
+            console.log('req.body: ', req.body);
+        const response = await reactionServices.uploadReaction(req.params ,userId , req.body);
+    
         console.log("first",response)
         return res.status(201).json(response);
     }
     catch(e){
-        console.log("abc",err)
+        console.log("abc",e)
         return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
     }
 };

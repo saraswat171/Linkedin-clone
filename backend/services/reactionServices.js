@@ -1,16 +1,16 @@
 const ReactionModel = require('../models/ReactionSchema')
 const CustomError = require('../libs/error')
-exports.uploadReaction= async(params , query ,body)=>{
+exports.uploadReaction= async(params , userId ,body)=>{
 
    
     // userId exists in mongodb && postId exists
     try { 
         const {postId} =params; 
 
-        const userId= query.userId;
-        const {type} =body;
+       
+        const databody =  Object.keys(body)[0];
         console.log(userId , postId)
-        const newReaction = await ReactionModel.create({userId:userId , postId:postId , type:type})
+        const newReaction = await ReactionModel.findOneAndUpdate({ userId:userId , postId:postId}, { type:databody}, { upsert: true, new: true })
         console.log(newReaction)
         return newReaction;
     }
