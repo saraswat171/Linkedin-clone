@@ -10,6 +10,8 @@ import PostCard from '../../components/PostCard/PostCard';
 import { Stack } from '@mui/material';
 import { fetchPostUser } from '../../Redux/post/postAction';
 
+import ProfileCard from '../../components/Profile/Profile';
+
 
 function Home() {
   const dispatch = useDispatch();
@@ -33,12 +35,17 @@ console.log("logged value" , logged)
   }, [logged, navigate , dispatch]);
 
   return (
-   <Stack flexDirection={'column'} gap={'20px'}>
+   <Stack flexDirection={'column'} gap={'20px'} >
      <Navbar/>
-     <PostCreate/>
+ <Stack flexDirection={'row'} gap={'20px'} margin={'auto'}>
+  <ProfileCard/>
+ <Stack flexDirection={'column'} gap={'20px'}>
+    <PostCreate/>
      {postData?.map((post) => (
         <PostCard postId={post._id} body={post.body} title={post.title} images={post.images} user={post.user.name} />
       ))}
+    </Stack>
+ </Stack>
       <button onClick={handleLogout}>Logout</button>
      
    </Stack>

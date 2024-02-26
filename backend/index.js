@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes')
 const reactionRoutes = require('./routes/reactionRoutes')
+const connectionRoutes = require('./routes/connectionRoutes')
 const app = express();
 require('dotenv').config()
 // port validation
@@ -33,6 +34,7 @@ app.use('/', userRoutes);
 app.use('/', postRoutes);
 app.use('/',commentRoutes);
 app.use('/',reactionRoutes);
+app.use('/', connectionRoutes);
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Server is running on port ${process.env.PORT} || 8080`);

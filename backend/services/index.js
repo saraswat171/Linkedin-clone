@@ -3,5 +3,6 @@ module.exports = {
     postServices: require('./postServices'),
     commentServices:require('./commentServices'),
     reactionServices:require('./reactionServices'),
-    authServices:require('./authServices')
+    authServices:require('./authServices'),
+    connectionServices: require('./connectionServices')
 }
