@@ -1,13 +1,13 @@
 import axios from "axios";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ReactionFetchAction, ReactionUserAction } from "./reactionType";
+import { ReactionDeleteAction, ReactionFetchAction, ReactionUserAction } from "./reactionType";
 
 
 export const postReactionUser = createAsyncThunk(
     ReactionUserAction,
     async (reactionData, { rejectWithValue,getState }) => {
-        console.log('reactionData: ', reactionData?.reaction);
+        
      
         try{  const token = getState().auth.token;
           
@@ -17,7 +17,7 @@ export const postReactionUser = createAsyncThunk(
                 }
             };
             const response = await axios.post(`http://localhost:8080/post/${reactionData.postId}/reaction`, reactionData.reaction , config);
-            console.log('response: ', response);
+   
             return response;
         }
         catch (err) {
@@ -27,10 +27,39 @@ export const postReactionUser = createAsyncThunk(
         }
     }
 );
-export const fetchReactionUser= createAsyncThunk(ReactionFetchAction, async (postId)=>{
+export const fetchReactionUser= createAsyncThunk(ReactionFetchAction, async (postId, { rejectWithValue })=>{
 
+  try{
     const res =await axios.get(`http://localhost:8080/post/${postId}/reaction`);
+    const postReaction={};
 
-    const data =  res.data;
-    return data;
+     postReaction.data =  res.data;
+     postReaction.id=postId
+    return postReaction;
+  }
+    catch (err) {
+           
+        return rejectWithValue(err.response.data);
+
+    }
+})
+export const deleteReactionUser = createAsyncThunk(ReactionDeleteAction, async (reactionId, { rejectWithValue, getState }) => {
+    try {
+        console.log('delete kro')
+        const token = getState().auth.token;
+        
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+      
+        const res = await axios.delete(`http://localhost:8080/post/reaction/${reactionId}`, config)
+      
+        return res.data
+    }
+    catch (error) {
+       
+        return rejectWithValue(error.response.data)
+    }
 })

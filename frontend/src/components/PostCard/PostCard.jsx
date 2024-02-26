@@ -24,42 +24,65 @@ import CommentCard from '../CommentCard/CommentCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCommentUser } from '../../Redux/comment/commentAction';
 import { ReactionBarSelector } from '@charkour/react-reactions';
-import { fetchReactionUser, postReactionUser } from '../../Redux/reaction/reactionAction';
+import { deleteReactionUser, fetchReactionUser, postReactionUser } from '../../Redux/reaction/reactionAction';
+import { useState } from 'react';
 
 
 
 export default function PostCard({ body, title, images, user, postId }) {
 
-
+    const userId = localStorage.getItem('user')
     const dispatch = useDispatch();
     // console.log('gfhgkjhgf' , postId)
 
-    React.useEffect(()=>{
-        dispatch(fetchReactionUser(postId)) 
-    },[])
+    // React.useEffect(()=>{
+    //     dispatch(fetchReactionUser(postId)) 
+    // },[])
 
     const commentarray = useSelector((state) => state.comment.commentdata);
- 
+    // console.log('gfhgkjhgf' , commentarray)
 
     //   const loading= useSelector((state)=>state.comment.loading)
     //   const error = useSelector((state)=>state.comment.error)
-    const [seemore, setSeemore] = React.useState(true)
-    const [seecomment, setSeecomment] = React.useState(false)
-    const [Reactiondiv , SetReactiondiv]= React.useState(false)
-    const [reaction , setReaction] = React.useState('')
+    const [seemore, setSeemore] = useState(true)
+    const [seecomment, setSeecomment] = useState(false)
+    const [Reactiondiv , SetReactiondiv]= useState(false)
+    const [reaction , setReaction] = useState('')
+    const [reactionId , setReactionId]=useState(null)
     const handleCommentClick = () => {
         setSeecomment(!seecomment)
         dispatch(fetchCommentUser(postId))
     }
     const ReactionClick =(label)=>{
+        console.log('chetn')
         const reactionData= {}
         reactionData.reaction=label
         reactionData.postId = postId
         dispatch(postReactionUser(reactionData))
-   
+        dispatch(fetchReactionUser(postId));
     }
+    const handleDeletereaction=()=>{
+        console.log('reaction id' , reactionId)
+        if(reactionId)
+        {dispatch(deleteReactionUser(reactionId));}
+    }
+    const getReactionData = async () => {
+        const response = await dispatch(fetchReactionUser(postId));
+       
+       if(response){
+       const UserReaction = response.payload?.data?.find((item) => item.userId === userId)
+       setReactionId(UserReaction?._id)
+       }
+            
+            
+        
+    }
+    React.useEffect(() => {
+        getReactionData()
+       
+    }, [reaction])
     const ReactionsData= useSelector((state)=> state.reaction.data)
-    console.log('ReactionsData: ', ReactionsData);
+    // console.log('ReactionsData: ', (ReactionsData));
     return (
         <Stack margin={'auto'} >
             <Card sx={{ width: 555, boxShadow: 'none', borderRadius: '10px' }} >
@@ -113,47 +136,8 @@ export default function PostCard({ body, title, images, user, postId }) {
 
 
                 </CardContent>
-                {/* {images?.map((i)=>{
-          
- <CardMedia
- component="img"
- height="auto"
- // {imagesdata?.map((i)=>
- //     <img src={`http://localhost:8080/${i.image}`} alt='hjghfv' ></img>
- // {images?.map((i)=> image={`http://localhost:8080/${i.image}`} )
- image={`http://localhost:8080/${i[0]}`}
- alt="uy"
-/>
-           }
-          
-           )}   */}
-                {/* {(images.length === 1)  ? <CardMedia
-        component="img"
-        height="194"
-        image={`http://localhost:8080/${images}`}
-        alt="post image"
-      /> : <CardMedia  
-      height="194"> <Stack direction="column" spacing={2} sx={{ width: '555px', overflow: 'auto' }}  justifyContent="center" > 
-      {images.map((image) => (
-        <img src={`http://localhost:8080/${image}`} alt='' key={image} />
-      ))}
-    </Stack></CardMedia>} */}
-                {/* <CardMedia
-        component="img"
-        height="194"
-        image={`http://localhost:8080/${images[currentImageIndex]}`}
-        alt="post image"
-      />
-      {images.length > 1 && (
-       <Carousel
-          value={currentImageIndex}
-          onChange={handleSliderChange}
-          min={0}
-          max={images.length - 1}
-          step={1}
-          aria-label="Image slider"
-        />
-      )} */}
+               
+     
                 <Carousel>
                     {images.map((image, index) => (
                         <CardMedia sx={{ pb: 0 }}
@@ -170,10 +154,12 @@ export default function PostCard({ body, title, images, user, postId }) {
                 <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: '12px', pt: '8px', pb: '8px', pr: '16px' }}>
                     <Typography fontSize={'12px'} color="text.secondary" display={'flex'} alignItems={'center'} gap={'3px'}
                     >
-                        <ThumbUpOutlinedIcon fontSize='16px' className='like-icon' /> 100
+                        <ThumbUpOutlinedIcon fontSize='16px' className='like-icon' /> {ReactionsData[postId] ? ReactionsData[postId].length : 0}
+
                     </Typography>
+                    {/* {ReactionsData && typeof ReactionsData === 'object' && ReactionsData[postId] ? ReactionsData[postId].length : 0} */}
                     <Typography fontSize={'12px'} color="text.secondary">
-                        10 Comments
+                    {commentarray[postId] ? commentarray[postId].length : 0} Comments
                     </Typography>
 
                 </CardContent>
@@ -183,7 +169,11 @@ export default function PostCard({ body, title, images, user, postId }) {
                     marginRight: '16px', padding: '0px'
                 }} />
                 <CardActions sx={{ display: 'flex', justifyContent: 'space-around', position:'relative' }}>
-                    <IconButton sx={{ gap: '10px' }} onMouseEnter={()=> SetReactiondiv(true)} onMouseLeave={()=>SetReactiondiv(false)}>
+                    <IconButton sx={{ gap: '10px' , color: Boolean(ReactionsData[postId]?.find((likes) => likes.userId === userId)) ? '#0374b3' : '#807c7c' }}
+                     onMouseEnter={()=> SetReactiondiv(true)} 
+                     onMouseLeave={()=>SetReactiondiv(false)}
+                     onClick={handleDeletereaction}
+                     >
                         <ThumbUpOffAltRoundedIcon fontSize='20px'  />
                         <Typography fontSize={'14px'} >{reaction? reaction :'Like'}</Typography>
                       {Reactiondiv &&  <Box className='reactionsdiv'> <ReactionBarSelector onSelect={(label)=>{

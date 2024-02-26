@@ -10,7 +10,7 @@ router.post('/comment/:commentId/reaction', reactionController.uploadingCommentR
 router.get('/post/:postId/reaction', reactionController.fetchReaction),
 router.get('/comment/:commentId/reaction', reactionController.fetchCommentReaction),
 router.put('/post/reaction/:reactionId', reactionController.updatingReaction),
-router.delete('/post/reaction/:reactionId',reactionController.deletingReaction)
+router.delete('/post/reaction/:reactionId',authenticateJWT,reactionController.deletingReaction)
 
 
 

@@ -54,7 +54,12 @@ exports.fetchReaction = async(req,res)=>{
 
 exports.deletingReaction = async(req,res)=>{
     try{
-        const response = await reactionServices.deleteReaction(req.params , req.query );
+       
+        if (!res.locals.isAuthenticated) {
+        throw new CustomError("User not authorised", 401)
+    }
+        const userId = req.user.ID;
+        const response = await reactionServices.deleteReaction(req.params ,userId  );
         return res.status(200).json(response);
     }
     catch(e){

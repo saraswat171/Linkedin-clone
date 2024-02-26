@@ -99,14 +99,18 @@ exports.updateReaction=async(params , query ,body)=>{
     }
 };
 
-exports.deleteReaction=async(params , query )=>{
+exports.deleteReaction=async(params , userId )=>{
    
   
     try{
+    
         const {reactionId} = params; 
-        const userId= query.userId;
-        if(userId === await ReactionModel.findById(reactionId).userId){
+        const UserReaction = await ReactionModel.findById(reactionId);
+
+        if(UserReaction.userId == userId){
+            
             const delReaction = await ReactionModel.findByIdAndDelete(reactionId);
+            console.log('delete krenge')
             return delReaction;
         }
        
