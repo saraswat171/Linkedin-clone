@@ -45,7 +45,7 @@ function Navbar() {
             <Typography fontSize={'12px'} align="center"   >Home</Typography>
           </Link>
 
-          <Link href="" sx={{ display:'flex' , flexDirection:'column',
+          <Link href="/mynetwork" sx={{ display:'flex' , flexDirection:'column',
             alignItems: 'center', textDecoration: 'none',
 
             color: (theme) => theme.palette.grey[700],

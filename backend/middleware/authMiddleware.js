@@ -8,7 +8,7 @@ const authenticateJWT = (req, res, next) => {
         return res.sendStatus(401);
     }
 
-    jwt.verify(JSON.parse(token), 'jwt-key', (err, user) => {
+    jwt.verify(token, 'jwt-key', (err, user) => {
         if (err) {
             console.log('token: ', token);
             console.log('err: ', err);

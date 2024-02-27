@@ -65,7 +65,7 @@ function PostCreate() {
     }
 
     return (
-        <Stack margin={'auto'}>
+        <Stack margin={'auto'} border={'0'}>
             <Box className="post-container">
                 <Box className="post-container-a" sx={{ padding: '10px' }}>
 

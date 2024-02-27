@@ -48,16 +48,22 @@ exports.fetchSuggestion = async(req,res)=>{
     }
 };
 
-// exports.updatingConnection = async(req,res)=>{
-//     try{
-//         const response = await connectionServices.updateConnection(req.params, req.query , req.body);
-//         return res.status(200).json(response);
-//     }
-//     catch(e){
-//         return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
-//     }
+exports.updatingConnection = async(req,res)=>{
 
-// };
+    try{
+          if (!res.locals.isAuthenticated) {
+            console.log('locals: ');
+        throw new CustomError("User not authorised", 401)
+    }
+        const userId = req.user.ID;
+        const response = await connectionServices.updateConnection(req.params, userId, req.body);
+        return res.status(200).json(response);
+    }
+    catch(e){
+        return res.status(e?.code || 500).json({message:e?.message || "Internal server error"})
+    }
+
+};
 
 
 

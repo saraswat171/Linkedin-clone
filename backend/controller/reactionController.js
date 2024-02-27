@@ -8,10 +8,10 @@ exports.uploadingReaction=async(req,res)=>{
             throw new CustomError("User not authorised", 401)
         }
             const userId = req.user.ID;
-            console.log('req.body: ', req.body);
+           
         const response = await reactionServices.uploadReaction(req.params ,userId , req.body);
     
-        console.log("first",response)
+        
         return res.status(201).json(response);
     }
     catch(e){
@@ -22,7 +22,7 @@ exports.uploadingReaction=async(req,res)=>{
 exports.uploadingCommentReaction=async(req,res)=>{
     try{
         const response = await reactionServices.uploadCommentReaction(req.params , req.query , req.body);
-        console.log("first",response)
+       // console.log("first",response)
         return res.status(201).json(response);
     }
     catch(e){

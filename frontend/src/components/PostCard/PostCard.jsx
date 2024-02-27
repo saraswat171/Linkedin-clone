@@ -48,13 +48,17 @@ export default function PostCard({ body, title, images, user, postId }) {
     const [seecomment, setSeecomment] = useState(false)
     const [Reactiondiv , SetReactiondiv]= useState(false)
     const [reaction , setReaction] = useState('')
+   
     const [reactionId , setReactionId]=useState(null)
     const handleCommentClick = () => {
         setSeecomment(!seecomment)
         dispatch(fetchCommentUser(postId))
     }
-    const ReactionClick =(label)=>{
-        console.log('chetn')
+    const ReactionClick =(label ,e)=>{
+      
+        console.log('chetn' , label)
+        console.log('reaction: ', reaction);
+    
         const reactionData= {}
         reactionData.reaction=label
         reactionData.postId = postId
@@ -62,7 +66,7 @@ export default function PostCard({ body, title, images, user, postId }) {
         dispatch(fetchReactionUser(postId));
     }
     const handleDeletereaction=()=>{
-        console.log('reaction id' , reactionId)
+        // console.log('reaction id' , reactionId)
         if(reactionId)
         {dispatch(deleteReactionUser(reactionId));}
     }
@@ -138,7 +142,7 @@ export default function PostCard({ body, title, images, user, postId }) {
                 </CardContent>
                
      
-                <Carousel>
+                {/* <Carousel>
                     {images.map((image, index) => (
                         <CardMedia sx={{ pb: 0 }}
                             key={index}
@@ -150,7 +154,7 @@ export default function PostCard({ body, title, images, user, postId }) {
 
 
                     ))}
-                </Carousel >
+                </Carousel > */}
                 <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pl: '12px', pt: '8px', pb: '8px', pr: '16px' }}>
                     <Typography fontSize={'12px'} color="text.secondary" display={'flex'} alignItems={'center'} gap={'3px'}
                     >
@@ -161,7 +165,6 @@ export default function PostCard({ body, title, images, user, postId }) {
                     <Typography fontSize={'12px'} color="text.secondary">
                     {commentarray[postId] ? commentarray[postId].length : 0} Comments
                     </Typography>
-
                 </CardContent>
 
                 <Divider className='divider' sx={{
@@ -177,6 +180,7 @@ export default function PostCard({ body, title, images, user, postId }) {
                         <ThumbUpOffAltRoundedIcon fontSize='20px'  />
                         <Typography fontSize={'14px'} >{reaction? reaction :'Like'}</Typography>
                       {Reactiondiv &&  <Box className='reactionsdiv'> <ReactionBarSelector onSelect={(label)=>{
+                        
                         if(label === 'satisfaction'){
                             label = 'Like'
                         }
@@ -187,6 +191,10 @@ export default function PostCard({ body, title, images, user, postId }) {
                         }
                         
                       }
+
+
+
+                   
                     
                     
                     } /></Box>}

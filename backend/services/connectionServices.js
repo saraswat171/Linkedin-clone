@@ -6,11 +6,25 @@ exports.uploadconnection = async(params,senderId)=>{
   console.log("first")
     try {
      const {receiverId}=params;
-
-
+    
+ const user = UsersModel.findById(receiverId);
+ if (!user)
+     throw new CustomError("User does not exist", 404);
+     const connection = await ConnectionModel.findOne({ $or: [{senderId:senderId , receiverId:receiverId }, { senderId:receiverId , receiverId:senderId }] })
+     if(!connection){
         const newConnection = await ConnectionModel.create({senderId:senderId , receiverId:receiverId , Status:'Pending'})
         console.log(newConnection)
         return newConnection;
+     }
+     if (connection.Status !== 'Withdraw')
+    throw new CustomError("Already connection exist", 401);
+    if ((new Date()).getTime() - connection.updatedAt.getTime() > 1855058823) //greater than new date by 3 weeks
+    {
+        const response = await ConnectionModel.findByIdAndUpdate(connection._id, { Status: 'Pending' }, { new: true })
+        return response;
+    }
+    throw new CustomError("Required 3 weeks waiting time to request again ", 409);
+       
     }
     catch(err){
         console.log(err)
@@ -18,6 +32,9 @@ exports.uploadconnection = async(params,senderId)=>{
     }
 
 };
+
+
+
 
 exports.fetchconnection = async(userId)=>{     //userId from authentication
 
@@ -52,18 +69,12 @@ exports.fetchsuggestion = async(userId)=>{     //userId from authentication
 
  
     try{
-        const result = await ConnectionModel.find({$and : [{ $or: [ { senderId: userId }, { receiverId: userId } ] } , { $or: [ { Status: 'Rejected' }, { Status: 'Deleted' } ] }]}); 
-        let ids = [];
-        console.log('userId: ', typeof(userId));
-        result?.map((connection)=> {
-            
-            if((connection.senderId).toString() === userId) ids.push(connection.receiverId);
-          
-            else ids.push(connection.senderId);
-        })
-        ids.push(userId)
-        console.log('result: ', ids);
-     const response = await UsersModel.find({_id : {$nin : ids} }); 
+        const result = await ConnectionModel.find({$and : [{ $or: [ { senderId: userId }, { receiverId: userId } ] } , { $nor: [ { Status: 'Rejected' }, { Status: 'Deleted' } ] }]}); 
+   
+        const ids= result?.map(connection => (connection.senderId).toString()=== userId ?  connection.receiverId : connection.senderId )
+       
+       
+     const response = await UsersModel.find({_id : {$nin : [...ids,userId]} }); 
     
  
      return response;
@@ -80,7 +91,9 @@ exports.fetchsuggestion = async(userId)=>{     //userId from authentication
  exports.updateConnection=  async(params , userId , body)=>{
     try{
         const {connectionId}=params;
-        const status = body;
+        console.log('connectionId: ', connectionId);
+        const status = body.status;
+       // console.log('status: ', status);
         if (!connectionId)
         throw new CustomError("Connection id is required", 401);
         const response = await ConnectionModel.findById(connectionId);
@@ -91,7 +104,7 @@ exports.fetchsuggestion = async(userId)=>{     //userId from authentication
         throw new CustomError("Status is required", 401);
     if (status === 'Pending')
         throw new CustomError(" Bad request", 400);
-    if (status === 'Withdraw' && response.Status === 'Pending') {
+    if (status === 'Withdraw' && response.Status === 'Pending' && (response.senderId).toString() === userId) {
         const res = ConnectionModel.findOneAndUpdate({ senderId: userId, _id: connectionId }, { Status: status }, { new: true, upsert: true })
         console.log('res: ', res);
         return res;
@@ -102,8 +115,9 @@ exports.fetchsuggestion = async(userId)=>{     //userId from authentication
         return res;
     }
     else if (status === 'Deleted' && response.Status === 'Accepted') {
+       
         const res = ConnectionModel.findOneAndUpdate({ $or: [{ _id: connectionId, receiverId: userId }, { senderId: userId, _id: connectionId }] }, { Status: status }, { new: true, upsert: true })
-        console.log('res: ', res);
+        // console.log('res: ', res);
         return res;
     }
 

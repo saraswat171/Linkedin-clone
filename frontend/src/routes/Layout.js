@@ -3,6 +3,7 @@ import { BrowserRouter as Router ,Route , Routes } from 'react-router-dom';
 import SignUp from '../pages/SignUp/SignUp';
 import Login from '../pages/Login/Login';
 import Home from '../pages/Home/home';
+import Mynetwork from '../pages/Network/Mynetwork';
 
 
 function Layout() {
@@ -13,6 +14,7 @@ function Layout() {
         <Route path='/Login' Component={Login} />
         <Route path='/' Component={SignUp} />
         <Route path='/home' Component={Home}/>
+        <Route path='/mynetwork' Component={Mynetwork}/>
     </Routes>
    </Router>
   )

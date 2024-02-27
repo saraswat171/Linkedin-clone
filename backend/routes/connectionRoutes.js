@@ -9,7 +9,7 @@ router.post('/user/connection/:receiverId' , authenticateJWT, connectionControll
 router.get('/user/connection', authenticateJWT ,connectionController.fetchConnection),
 router.get('/user/suggestion', authenticateJWT ,connectionController.fetchSuggestion),
 
-// router.put('/user/connection/:senderId' ,authenticateJWT ,connectionController.updatingConnection)
+router.put('/user/connection/:connectionId' ,authenticateJWT ,connectionController.updatingConnection)
 
 
 

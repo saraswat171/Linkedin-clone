@@ -9,9 +9,9 @@ exports.uploadReaction= async(params , userId ,body)=>{
 
        
         const databody =  Object.keys(body)[0];
-        console.log(userId , postId)
+        console.log('id' , postId)
         const newReaction = await ReactionModel.findOneAndUpdate({ userId:userId , postId:postId}, { type:databody}, { upsert: true, new: true })
-        console.log(newReaction)
+       console.log(newReaction)
         return newReaction;
     }
     catch(err){
@@ -47,7 +47,7 @@ exports.getReaction = async(params)=>{
     try {
         const {postId}=params; 
         const ReactionData = await ReactionModel.find({postId : postId});
-        console.log("first" , ReactionData)
+       // console.log("first" , ReactionData)
         if(ReactionData.length === 0){
             throw new CustomError("No reaction found" , 404)
         }
@@ -64,7 +64,7 @@ exports.getCommentReaction = async(params)=>{
     try {
         const {commentId}=params; 
         const ReactionData = await ReactionModel.find({commentId : commentId});
-        console.log("first" , ReactionData)
+      //  console.log("first" , ReactionData)
         if(ReactionData.length === 0){
             throw new CustomError("No reaction found" , 404)
         }
@@ -84,7 +84,7 @@ exports.updateReaction=async(params , query ,body)=>{
         const userId= query.userId;
         const { type} = req.body;
         const user= await ReactionModel.findById(reactionId)
-        console.log("first",userId==user.userId)
+      //  console.log("first",userId==user.userId)
         if(userId === user.userId){
             const updateReaction= await ReactionModel.findByIdAndUpdate(reactionId,{type:type}, {new:true});
             return updateReaction;
