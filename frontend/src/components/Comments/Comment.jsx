@@ -4,12 +4,13 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import EmojiPicker from 'emoji-picker-react';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import './Comment.css'
-import { commentUser } from '../../Redux/comment/commentAction';
+import { commentUser, fetchCommentUser } from '../../Redux/comment/commentAction';
 import { useDispatch } from 'react-redux';
 function Comment({ postId }) {
   const [showemoji, setShowemoji] = useState(false);
   const [commentbody, setCommentbody] = useState('')
   const dispatch = useDispatch()
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -64,7 +65,7 @@ function Comment({ postId }) {
         />}
 
       </Stack>
-      {(commentbody.length !== 0 && <Button type="submit" color="primary" variant='contained' sx={{ height: '24px', width: "51px", ml: '60px', borderRadius: 28, p: 0, minWidth: '0', fontSize: 14, textTransform: 'none' }}>Post</Button>)}
+      {(commentbody.length !== 0 && <Button type="submit"  color="primary" variant='contained' sx={{ height: '24px', width: "51px", ml: '60px', borderRadius: 28, p: 0, minWidth: '0', fontSize: 14, textTransform: 'none' }}>Post</Button>)}
     </Stack>
 
 

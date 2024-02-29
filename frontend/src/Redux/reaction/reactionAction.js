@@ -18,6 +18,7 @@ export const postReactionUser = createAsyncThunk(
             };
             const response = await axios.post(`http://localhost:8080/post/${reactionData.postId}/reaction`, reactionData.reaction , config);
    
+            console.log('response: ', response);
             return response;
         }
         catch (err) {
@@ -35,6 +36,7 @@ export const fetchReactionUser= createAsyncThunk(ReactionFetchAction, async (pos
 
      postReaction.data =  res.data;
      postReaction.id=postId
+    
     return postReaction;
   }
     catch (err) {
@@ -55,8 +57,9 @@ export const deleteReactionUser = createAsyncThunk(ReactionDeleteAction, async (
         }
       
         const res = await axios.delete(`http://localhost:8080/post/reaction/${reactionId}`, config)
-      
-        return res.data
+      const info = res.data;
+
+        return {reactionId , info}
     }
     catch (error) {
        

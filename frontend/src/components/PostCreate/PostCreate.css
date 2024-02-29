@@ -41,8 +41,8 @@
 }
 
 .image {
-    min-width: 46px;
-    min-height: 46px;
+    width: 46px;
+    height: 46px;
     background-color: black;
     border-radius: 50%;
 }

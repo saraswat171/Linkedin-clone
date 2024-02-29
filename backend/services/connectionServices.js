@@ -68,10 +68,20 @@ try{
         
         $match:{
             $or:[
-                {Status :'Pending',senderId:myId },
+                {Status :'Pending',receiverId:myId },
                 {Status:'Accepted',  $or:[{senderId:myId},{receiverId:myId}]}
             ]
         }
+        },
+        {
+            $lookup:{
+                from:'users',
+                localField: 'senderId',
+                foreignField: '_id',
+                pipeline:[{$project:{'name':1}}],
+                as: 'sendername'
+
+            }
         },
         {
             $group:{
@@ -86,8 +96,9 @@ try{
         acc[curr._id] = curr.data;
         return acc;
     }, {});
+    console.log('transformedResponse: ', response);
 
-    console.log('response ', transformedResponse.Accepted);
+  
     return transformedResponse;
    }
    catch(err){
@@ -122,9 +133,8 @@ exports.fetchsuggestion = async(userId)=>{     //userId from authentication
  exports.updateConnection=  async(params , userId , body)=>{
     try{
         const {connectionId}=params;
-        console.log('connectionId: ', connectionId);
-        const status = body.status;
-       // console.log('status: ', status);
+   
+        const status = body;
         if (!connectionId)
         throw new CustomError("Connection id is required", 401);
         const response = await ConnectionModel.findById(connectionId);

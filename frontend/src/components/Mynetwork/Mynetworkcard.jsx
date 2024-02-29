@@ -16,8 +16,11 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import TagOutlinedIcon from '@mui/icons-material/TagOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import { useSelector } from 'react-redux';
 export default function Mynetworkcard() {
     const [open, setOpen] = React.useState(true);
+    const acptedData = useSelector((state)=>state.connection.acceptedData)
+    const count = acptedData?.length;
 
     const handleClick = () => {
         setOpen(!open);
@@ -38,7 +41,7 @@ export default function Mynetworkcard() {
                 <ListItemIcon>
                 <PeopleAltIcon/>
                 </ListItemIcon>
-                <ListItemText sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',alignItems:'center', color: '#666666' }} primary="Connections" secondary='335' />
+                <ListItemText sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',alignItems:'center', color: '#666666' }} primary="Connections" secondary={count} />
 
             </ListItemButton>
 

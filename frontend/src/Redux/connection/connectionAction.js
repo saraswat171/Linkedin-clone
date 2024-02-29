@@ -42,6 +42,7 @@ export const fetchconnectionUser = createAsyncThunk(
             };
            
             const response = await axios.get(`http://localhost:8080/user/connection`, config);
+            console.log('response: ', response);
             
             return response.data;
         }
@@ -55,7 +56,7 @@ export const fetchconnectionUser = createAsyncThunk(
 export const fetchsuggestionUser = createAsyncThunk(
    
     suggestionFetchAction,
-    async ( { rejectWithValue, getState }) => {
+    async ( { rejectWithValue}) => {
         
         
         try {
@@ -83,10 +84,11 @@ export const fetchsuggestionUser = createAsyncThunk(
 
 export const updateconnectionUser = createAsyncThunk(
     connectionUpdateAction,
-    async (data, { rejectWithValue, getState }) => {
+    async (data, { rejectWithValue}) => {
     
         try {
-            const token = getState().auth.token;
+            const token =  localStorage.getItem('token');
+            console.log('connectionId: ', data.status);
           
             const config = {
                 headers: {
@@ -94,9 +96,10 @@ export const updateconnectionUser = createAsyncThunk(
                 }
             };
            
-            const response = await axios.put(`http://localhost:8080/user/suggestion/${data.connectionId}`, data.status,config);
-            
-            return response.data;
+            const response = await axios.put(`http://localhost:8080/user/connection/${data.connectionId}`, data.status,config);
+            const connectionId =data.connectionId;
+            const info= response.data;
+            return {connectionId , info};
         }
         catch (err) {
            

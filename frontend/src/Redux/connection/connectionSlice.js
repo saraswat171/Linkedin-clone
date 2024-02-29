@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { connectionUser, fetchconnectionUser, fetchsuggestionUser } from "./connectionAction";
+import { connectionUser, fetchconnectionUser, fetchsuggestionUser, updateconnectionUser } from "./connectionAction";
 
 
 export const connectionSlice = createSlice({
     name: 'connection',
     initialState: {
       connectiondata:{},
-      acceptedData:{},
-      requestData:{},
+      acceptedData:[],
+      requestData:[],
       suggestiondata:{},
+      updateState:false,
+      StatusData:{},
       loading: false,
       error: null,
       success:false,
@@ -47,7 +49,7 @@ export const connectionSlice = createSlice({
           state.connectiondata=action.payload
           state.acceptedData = state.connectiondata['Accepted'];
           state.requestData = state.connectiondata['Pending'];
-          console.log('connectiondata: ', state.connectiondata['Pending']);
+          console.log('request data: ', state.requestData);
           
         
         })
@@ -74,6 +76,27 @@ export const connectionSlice = createSlice({
             state.error = action.payload;
            
           })
+          .addCase(updateconnectionUser.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+         
+          })
+          .addCase(updateconnectionUser.fulfilled, (state,action) => {
+            state.loading = false;
+            state.StatusData=action.payload;
+            state.updateState=true;
+            console.log('suggestiondata: ', state.StatusData);
+            const data = state.requestData.filter((item) => item?._id !== action.payload.connectionId)
+            state.requestData = data;
+         
+          
+          })
+          .addCase(updateconnectionUser.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+           
+          })
+          
        
     },
   });

@@ -5,6 +5,7 @@ import { commentFetchAction, commentPostAction } from "./commentType";
 export const commentUser = createAsyncThunk(
     commentPostAction,
     async (data, { rejectWithValue, getState }) => {
+        console.log('data: ', data);
        const body =data.commentbody
         try {
             const token = getState().auth.token;
@@ -16,8 +17,12 @@ export const commentUser = createAsyncThunk(
             };
            
             const response = await axios.post(`http://localhost:8080/post/${data.postId}/comments`,body , config);
+            console.log('response: ', response);
+            const postId = data.postId;
+            const info = response.data;
+            console.log('response.data: ', response.data);
             
-            return response.data;
+            return  {postId , info};
         }
         catch (err) {
            

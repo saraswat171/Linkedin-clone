@@ -55,8 +55,10 @@ exports.updatingConnection = async(req,res)=>{
             console.log('locals: ');
         throw new CustomError("User not authorised", 401)
     }
+  
+    console.log('req.body: ',Object.keys(req.body)[0]);
         const userId = req.user.ID;
-        const response = await connectionServices.updateConnection(req.params, userId, req.body);
+        const response = await connectionServices.updateConnection(req.params, userId,  Object.keys(req.body)[0]);
         return res.status(200).json(response);
     }
     catch(e){

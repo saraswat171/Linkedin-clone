@@ -8,6 +8,7 @@ export const reactionSlice = createSlice({
       loading: false,
       error: null,
       success:false,
+      deletesuccess:false,
       data:{}
     },
     reducers: {
@@ -19,11 +20,10 @@ export const reactionSlice = createSlice({
           state.loading = true;
           state.error = null;
         })
-        .addCase(postReactionUser.fulfilled, (state) => {
+        .addCase(postReactionUser.fulfilled, (state,action) => {
+          console.log('action: ', action.payload);
           state.loading = false;
-          state.success=true;
-         
-          
+          state.success=true;         
         })
         .addCase(postReactionUser.rejected, (state, action) => {
           state.loading = false;
@@ -47,16 +47,20 @@ export const reactionSlice = createSlice({
          
         })
         .addCase(deleteReactionUser.pending, (state) => {
-          state.isLoading = true;
+          state.loading = true;
       })
       .addCase(deleteReactionUser.fulfilled, (state, action) => {
-          state.isLoading = false;
-          state.delete = action.payload
+          state.loading = false;
+          state.deletesuccess = true;
+         
+          // const remainingData = Object.values(state.data)?.filter((item) => item?._id !== action.payload.reactionId)
+          // console.log('remainingData: ', remainingData);
+          // state.data = remainingData
          
 
       })
       .addCase(deleteReactionUser.rejected, (state, action) => {
-          state.isLoading = false;
+          state.loading = false;
           state.error = action.payload
       })
        

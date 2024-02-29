@@ -7,7 +7,7 @@ export const postSlice = createSlice({
       loading: false,
       error: null,
       success:false,
-    
+      data:null,
     },
     reducers: {
      
@@ -18,9 +18,10 @@ export const postSlice = createSlice({
           state.loading = true;
           state.error = null;
         })
-        .addCase(postUser.fulfilled, (state) => {
+        .addCase(postUser.fulfilled, (state , action) => {
           state.loading = false;
           state.success=true;
+          state.data=[action.payload, ...state.data]
           console.log(' state' , state.success)
           
         })

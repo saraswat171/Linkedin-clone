@@ -7,7 +7,7 @@ exports.userPosts = async ({title , body , files , id} )=> {
     
         const images = files.map((i) => { return i.path });
         //  console.log('images' , images)
-        const newPost = await PostModel.create({ title: title, body: body, user: id, images: images });
+        const newPost = (await PostModel.create({ title: title, body: body, user: id, images: images })).populate({ path: 'user', select: 'name' });
         console.log('newPost', newPost)
         return newPost;
     }

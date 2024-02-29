@@ -26,7 +26,7 @@ export const postUser = createAsyncThunk(
 export const fetchPostUser= createAsyncThunk(fetchPostAction, async ()=>{
 
     const res =await axios.get('http://localhost:8080/posts');
-    console.log('data ',res.data)
+
     const data =  res.data;
     return data;
 })

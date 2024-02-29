@@ -20,10 +20,12 @@ export const commentSlice = createSlice({
           state.loading = true;
           state.error = null;
         })
-        .addCase(commentUser.fulfilled, (state) => {
+        .addCase(commentUser.fulfilled, (state,action) => {
           state.loading = false;
           state.success=true;
-          console.log(' state' , state.success)
+        //  console.log('state.commentsData[action.payload.postId]: ', state.commentsData);
+          console.log(' state' , action.payload)
+          state.commentdata[action.payload.postId] = [action.payload.info,...state.commentdata[action.payload.postId]];
           
         })
         .addCase(commentUser.rejected, (state, action) => {

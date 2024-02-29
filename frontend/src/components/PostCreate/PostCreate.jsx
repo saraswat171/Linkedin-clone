@@ -8,7 +8,7 @@ import Hover from '../Hover';
 
 import { useDispatch } from 'react-redux';
 import { postUser } from '../../Redux/post/postAction';
-
+import backgroundimg from '../../Assets/images/painting-mountain-lake-with-mountain-background_188544-9126.avif'
 
 function PostCreate() {
     const theme = useTheme();
@@ -69,7 +69,7 @@ function PostCreate() {
             <Box className="post-container">
                 <Box className="post-container-a" sx={{ padding: '10px' }}>
 
-                    <img className="image" alt='' ></img>
+                    <img className="image" src={backgroundimg} alt='' ></img>
                     <Box className="post-head" onClick={handleClickOpen} >Start a post</Box>
                 </Box>
                 <Box className="post-bottom">
