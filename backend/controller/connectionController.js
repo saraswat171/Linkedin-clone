@@ -5,7 +5,7 @@ const { connectionServices } = require("../services");
 
 exports.uploadingConnection=async(req,res)=>{
     try{
-       console.log("first")
+        console.log("first" , req.params)
         if (!res.locals.isAuthenticated) {
             throw new CustomError("User not authorised", 401)
         }

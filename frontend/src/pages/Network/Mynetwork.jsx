@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Mynetworkcard from '../../components/Mynetwork/Mynetworkcard'
 import RequestCard from '../../components/Requestcard/RequestCard'
 
 import Suggestion from '../../components/Suggestions/Suggestion'
 import { Stack } from '@mui/material'
 import Navbar from '../../components/Navbar/Navbar'
+import { useDispatch } from 'react-redux'
+import { fetchconnectionUser, fetchsuggestionUser } from '../../Redux/connection/connectionAction'
 
 function Mynetwork() {
+    const dispatch =useDispatch();
+  
+    useEffect(()=>{
+        dispatch(fetchsuggestionUser(1));
+        dispatch(fetchconnectionUser(1));
+    },[])
     return (
 
 
@@ -17,6 +25,7 @@ function Mynetwork() {
                 <Mynetworkcard />
                 <Stack flexDirection={'column'} gap={'20px'}>
                     <RequestCard />
+                    
                     <Suggestion />
                 </Stack>
             </Stack>

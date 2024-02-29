@@ -5,18 +5,18 @@ import { connectionFetchAction, connectionPostAction, connectionUpdateAction, su
 
 export const connectionUser = createAsyncThunk(
     connectionPostAction,
-    async (receiverId, { rejectWithValue, getState }) => {
+    async (id, { rejectWithValue, getState }) => {
     
+       
         try {
             const token = getState().auth.token;
-          
             const config = {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             };
            
-            const response = await axios.post(`http://localhost:8080/user/connection/${receiverId}`, config);
+            const response = await axios.post(`http://localhost:8080/user/connection/${id}`,null, config);
             
             return response.data;
         }
@@ -31,9 +31,9 @@ export const connectionUser = createAsyncThunk(
 export const fetchconnectionUser = createAsyncThunk(
     connectionFetchAction,
     async ( { rejectWithValue, getState }) => {
-    
         try {
-            const token = getState().auth.token;
+            const token = localStorage.getItem('token')
+            console.log('hekko' )
           
             const config = {
                 headers: {
@@ -53,19 +53,23 @@ export const fetchconnectionUser = createAsyncThunk(
     }
 );
 export const fetchsuggestionUser = createAsyncThunk(
+   
     suggestionFetchAction,
     async ( { rejectWithValue, getState }) => {
-    
+        
+        
         try {
-            const token = getState().auth.token;
+            const token = localStorage.getItem('token')
+            
           
             const config = {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             };
-           
+        
             const response = await axios.get(`http://localhost:8080/user/suggestion`, config);
+
             
             return response.data;
         }

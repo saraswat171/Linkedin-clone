@@ -1,11 +1,12 @@
 const ConnectionModel = require('../models/ConnectionsSchema')
 const CustomError = require('../libs/error')
 const UsersModel = require('../models/UserSchema')
+var ObjectId = require('mongodb').ObjectId;
 exports.uploadconnection = async(params,senderId)=>{
 
-  console.log("first")
     try {
-     const {receiverId}=params;
+        const {receiverId}=params;
+       
     
  const user = UsersModel.findById(receiverId);
  if (!user)
@@ -39,25 +40,55 @@ exports.uploadconnection = async(params,senderId)=>{
 exports.fetchconnection = async(userId)=>{     //userId from authentication
 
  
-   try{
+//    try{
    
-    const response = await ConnectionModel.find({ $or: [ { senderId: userId }, { recieverId: userId } ] }); 
+//     const response = await ConnectionModel.find({ $or: [ { senderId: userId }, { recieverId: userId } ] }); 
    
-    const output={};
-    let request , connection , reject;
-    if(response.length > 0){
+//     const output={};
+//     let request , connection , reject;
+//     if(response.length > 0){
         
-        request= response.filter((rqst)=>  {  return rqst.Status=== 'Pending' && (rqst.senderId).toString() === userId});
-        console.log('request: ', request);
-        connection= response.filter((rqst)=> { return rqst.Status=== 'Accepted' && ((rqst.receiverId).toString() === userId  || (rqst.senderId).toString() === userId)});
-        reject = response.filter((rqst)=> { return rqst.Status=== 'Deleted' && ((rqst.receiverId).toString() === userId  || (rqst.senderId).toString() === userId)});
+//         request= response.filter((rqst)=>  {  return rqst.Status=== 'Pending' && (rqst.senderId).toString() === userId});
+//         console.log('request: ', request);
+//         connection= response.filter((rqst)=> { return rqst.Status=== 'Accepted' && ((rqst.receiverId).toString() === userId  || (rqst.senderId).toString() === userId)});
+//         reject = response.filter((rqst)=> { return rqst.Status=== 'Deleted' && ((rqst.receiverId).toString() === userId  || (rqst.senderId).toString() === userId)});
 
-    }
-    output.pendingrequest=request;
-    output.connected=connection;
-    output.cancel=reject;
-    return output;
+//     }
+//     output.pendingrequest=request;
+//     output.connected=connection;
+//     output.cancel=reject;
+//     return output;
  
+//    }
+try{
+    console.log('response ', {Status :'Pending' , senderId:`${userId}`})
+    // const response = await ConnectionModel.find({ $or: [ { senderId: userId }, { recieverId: userId } ] }); 
+   const myId = new ObjectId(userId);
+    const response = await ConnectionModel.aggregate([{
+        
+        $match:{
+            $or:[
+                {Status :'Pending',senderId:myId },
+                {Status:'Accepted',  $or:[{senderId:myId},{receiverId:myId}]}
+            ]
+        }
+        },
+        {
+            $group:{
+                _id:'$Status',
+                data: { $push: '$$ROOT' }
+            }
+        }
+    ]);
+   
+
+    const transformedResponse = response.reduce((acc, curr) => {
+        acc[curr._id] = curr.data;
+        return acc;
+    }, {});
+
+    console.log('response ', transformedResponse.Accepted);
+    return transformedResponse;
    }
    catch(err){
     console.log(err)
