@@ -29,23 +29,17 @@ import { useState } from 'react';
 
 
 
-export default function PostCard({ body, title, images, user, postId,profile }) {
-    console.log('user: ', user);
+export default function PostCard({ body, title, images, users, postId, profile, index }) {
+
+    // console.log('user: ', users  );
 
     const userId = JSON.parse(localStorage.getItem('user'));
 
     const dispatch = useDispatch();
-    // console.log('gfhgkjhgf' , postId)
 
-    // React.useEffect(()=>{
-    //     dispatch(fetchReactionUser(postId)) 
-    // },[])
 
     const commentarray = useSelector((state) => state.comment.commentdata);
-    // console.log('gfhgkjhgf' , commentarray)
 
-    //   const loading= useSelector((state)=>state.comment.loading)
-    //   const error = useSelector((state)=>state.comment.error)
     const [seemore, setSeemore] = useState(true)
     const [seecomment, setSeecomment] = useState(false)
     const [Reactiondiv, SetReactiondiv] = useState(false)
@@ -58,7 +52,7 @@ export default function PostCard({ body, title, images, user, postId,profile }) 
     }
     const ReactionClick = (label) => {
 
-        // console.log('reaction: ', reaction);
+
 
         const reactionData = {}
         reactionData.reaction = label
@@ -68,11 +62,14 @@ export default function PostCard({ body, title, images, user, postId,profile }) 
 
     }
     const handleDeletereaction = async () => {
-        // console.log('reaction id' , reactionId)
+
+
         if (reactionId) {
-            console.log('reactionId: ', reactionId);
+
             const res = await dispatch(deleteReactionUser(reactionId));
             if (res) {
+                getReactionData()
+
                 setReaction('')
             }
 
@@ -90,12 +87,13 @@ export default function PostCard({ body, title, images, user, postId,profile }) 
 
 
     }
+
     React.useEffect(() => {
         getReactionData()
 
     }, [reaction])
     const ReactionsData = useSelector((state) => state.reaction.data)
-    // console.log('ReactionsData: ', (ReactionsData));
+
     return (
         <Stack margin={'auto'} >
             <Card sx={{ width: 555, boxShadow: 'none', borderRadius: '10px' }} >
@@ -112,10 +110,10 @@ export default function PostCard({ body, title, images, user, postId,profile }) 
                             < Typography sx={{ color: '' }}>Follow</Typography>
                         </IconButton>
                     }
-                    // {`${user} `}
+
                     title={<Stack flexDirection={'row'} alignItems={'center'} gap={'5px'}>
 
-                        <Typography fontSize={'14px'} color={'Black'}> {user}</Typography>
+                        <Typography fontSize={'14px'} color={'Black'}> {users}</Typography>
                         <FiberManualRecordIcon sx={{ height: '5px', width: '5px' }} />
                         <Typography fontSize={'14px'} color={'grey'}> 1st +</Typography>
                     </Stack>}
@@ -171,7 +169,7 @@ export default function PostCard({ body, title, images, user, postId,profile }) 
                         <ThumbUpOutlinedIcon fontSize='16px' className='like-icon' /> {ReactionsData[postId] ? ReactionsData[postId].length : 0}
 
                     </Typography>
-                    {/* {ReactionsData && typeof ReactionsData === 'object' && ReactionsData[postId] ? ReactionsData[postId].length : 0} */}
+
                     <Typography fontSize={'12px'} color="text.secondary">
                         {commentarray[postId] ? commentarray[postId].length : 0} Comments
                     </Typography>
@@ -183,6 +181,7 @@ export default function PostCard({ body, title, images, user, postId,profile }) 
                 }} />
                 <CardActions sx={{ display: 'flex', justifyContent: 'space-around', position: 'relative' }}>
                     <IconButton sx={{ gap: '10px', color: Boolean(ReactionsData[postId]?.find((likes) => likes.userId === userId?._id)) ? '#0374b3' : '#807c7c' }}
+
                         onMouseEnter={() => SetReactiondiv(true)}
                         onMouseLeave={() => SetReactiondiv(false)}
                         onClick={handleDeletereaction}

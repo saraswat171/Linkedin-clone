@@ -21,18 +21,34 @@ function Home() {
 
 
 
-  // const handleLogout = () => {
-  //   dispatch(logoutUser());
-  //   navigate('/Login');
-  // };
+
   const postData = useSelector(state=>state.post.data)
   const logoutloader = useSelector((state)=>state.auth.logoutloading)
+  const time = useSelector((state) => state.post)
+  const loading = useSelector((state) => state.post.isLoading)
+  const error = useSelector((state) => state.post.error)
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop + 300 < document.documentElement.offsetHeight || loading) {
+   
+      return;
+    }
+   
+    if(postData.length < 15)
+    {dispatch(fetchPostUser(time?.createdAt))}
+  };
   useEffect(() => {
-    dispatch(fetchPostUser());
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loading]);
+
+
+
+  useEffect(() => {
+    dispatch(fetchPostUser(1));
     if (!logged) {
       navigate('/Login');
     }
-  }, [logged, navigate , dispatch]);
+  }, [logged, navigate ]);
 
   return (
 
@@ -44,7 +60,7 @@ function Home() {
  <Stack flexDirection={'column'} gap={'20px'}>
     <PostCreate/>
      {postData?.map((post) => (
-        <PostCard postId={post?._id} body={post?.body} title={post?.title} images={post?.images} user={post?.user.name} profile={post?.user.iamge} />
+        <PostCard postId={post?._id} body={post?.body} title={post?.title} images={post?.images} users={post?.user.name} profile={post?.user.iamge} />
       ))}
     </Stack>
  </Stack>

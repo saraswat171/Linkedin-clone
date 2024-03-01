@@ -17,7 +17,8 @@ exports.uploadPosts = async(req,res)=>{
 
 exports.fetchPosts = async(req,res)=>{
     try{
-        const response = await postServices.getPosts();
+        console.log('req.query: ', req.query);
+        const response = await postServices.getPosts(req.query);
         return res.status(200).json(response)
     }
     catch(e){

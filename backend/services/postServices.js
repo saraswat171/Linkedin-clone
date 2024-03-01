@@ -13,11 +13,19 @@ exports.userPosts = async ({title , body , files , id} )=> {
     }
     catch (err) { throw err; }
 };
-exports.getPosts = async () => {
+exports.getPosts = async (querys) => {
 
     try {
-     
-        const postData = await PostModel.find().populate({ path: 'user', select: 'name' });
+        let query={}
+        const createAt= querys.time;
+        console.log('createAt: ', (new Date(createAt)));
+      
+        if(createAt){ 
+        query= {  createdAt: { $lt: (new Date(createAt)) } }
+       }
+        const postData = await PostModel.find(query).populate(  'user' ,  'name' ).sort({createdAt :-1}).limit(3);
+        console.log('postData: ', postData);
+        
         if (postData.length === 0) {
             throw new CustomError("No post Found", 404)
         }

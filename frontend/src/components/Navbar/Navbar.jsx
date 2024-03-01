@@ -12,14 +12,15 @@ import './Navbar.css'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../Redux/auth/authAction';
+import {  resetpost } from '../../Redux/post/postSlice';
 
 function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = async() => {
     const res = await dispatch(logoutUser());
-    if(res)
-   {
+    dispatch(resetpost())
+    if(res){
     navigate('/Login');
    }
   };
@@ -29,7 +30,7 @@ function Navbar() {
       <AppBar sx={{ backgroundColor: 'white', height: '52px', justifyContent: 'center', boxShadow: 'none' }}>
         <Toolbar sx={{ margin: 'auto' }}>
 
-          <Toolbar sx={{ alignItems: 'center', gap: '10px',mr:'50px' }}>
+          <Toolbar sx={{ alignItems: 'center', gap: '10px',mr:'55px' }}>
             <img src={LinkedinIcon} alt='' className='iconsimage'></img>
 
 
@@ -45,7 +46,7 @@ function Navbar() {
               }} />
           </Toolbar>
 
-          <Toolbar sx={{ alignItems: 'center', gap: '20px' }} >
+          <Toolbar sx={{ alignItems: 'center', gap: '30px' }} >
 
             <Link href="/Home" sx={{
               display: 'flex', flexDirection: 'column',

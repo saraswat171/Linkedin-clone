@@ -24,7 +24,7 @@ function RequestCard() {
   return (
     <Stack flexDirection={'column'} sx={{ width: '804px', backgroundColor: 'white', boxSizing: 'border-box', pl: '16px', pt: '8px', pr: '8px', borderRadius: '8px' }}>
       <Stack flexDirection={'row'} justifyContent={'space-between'} alignItems={'center'} sx={{ pb: '14px' }}>
-        <Typography fontSize={'16px'} fontWeight={'400'} color={'#666666'}>Invitations</Typography>
+        <Typography fontSize={'16px'} fontWeight={'400'} color={'#666666'}>{requesteddata?.length ? 'Invitations' : 'No pending invitations' }</Typography>
         <Typography fontSize={'16px'} fontWeight={'550'} color={'#999999'}>Manage</Typography>
       </Stack>
   

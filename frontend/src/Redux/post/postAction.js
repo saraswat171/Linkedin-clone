@@ -23,12 +23,29 @@ export const postUser = createAsyncThunk(
     }
 );
 
-export const fetchPostUser= createAsyncThunk(fetchPostAction, async ()=>{
+export const fetchPostUser= createAsyncThunk(fetchPostAction, async (time, { rejectWithValue})=>{
 
-    const res =await axios.get('http://localhost:8080/posts');
+   try{
+    console.log("time at action" , time)
+    //time=${time}
+   let res={}
+    if(time !== 1) {
+         res =await axios.get(`http://localhost:8080/posts?time=${time}`);
+    }
+    else {
+        res =await axios.get(`http://localhost:8080/posts`);
+    }
+    
 
+    console.log(res)
     const data =  res.data;
     return data;
+   }
+   catch (err) {
+           
+    return rejectWithValue(err.response.data);
+
+}
 })
 
 
