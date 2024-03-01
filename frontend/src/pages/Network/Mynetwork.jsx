@@ -14,7 +14,7 @@ function Mynetwork() {
     useEffect(()=>{
         dispatch(fetchsuggestionUser(1));
         dispatch(fetchconnectionUser(1));
-    },[])
+    },[dispatch])
     return (
 
 

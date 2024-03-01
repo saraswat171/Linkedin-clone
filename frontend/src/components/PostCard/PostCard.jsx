@@ -32,7 +32,7 @@ import { useState } from 'react';
 export default function PostCard({ body, title, images, user, postId,profile }) {
     console.log('user: ', user);
 
-    const userId = JSON.parse(localStorage.getItem('user'))
+    const userId = JSON.parse(localStorage.getItem('user'));
 
     const dispatch = useDispatch();
     // console.log('gfhgkjhgf' , postId)
@@ -152,7 +152,7 @@ export default function PostCard({ body, title, images, user, postId,profile }) 
                 </CardContent>
 
 
-                <Carousel>
+                <Carousel showThumbs={false} >
                     {images.map((image, index) => (
                         <CardMedia sx={{ pb: 0 }}
                             key={index}

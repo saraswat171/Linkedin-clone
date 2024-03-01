@@ -38,7 +38,7 @@ function CommentCard({ commentData }) {
                             </Stack>
                         }
                     />
-                    <CardContent sx={{ paddingTop: '0', paddingRight: '16px', paddingLeft: '12px' }}>
+                    <CardContent className='hxhxh' sx={{ paddingTop: '0', paddingRight: '16px', paddingLeft: '12px' }}>
                         <Typography variant="body2" color="text.secondary" >
                             {commentData.body}
                         </Typography>

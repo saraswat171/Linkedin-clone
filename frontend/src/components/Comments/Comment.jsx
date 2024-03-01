@@ -4,7 +4,7 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import EmojiPicker from 'emoji-picker-react';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import './Comment.css'
-import { commentUser, fetchCommentUser } from '../../Redux/comment/commentAction';
+import { commentUser } from '../../Redux/comment/commentAction';
 import { useDispatch } from 'react-redux';
 function Comment({ postId }) {
   const [showemoji, setShowemoji] = useState(false);

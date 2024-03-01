@@ -29,7 +29,7 @@ function Navbar() {
       <AppBar sx={{ backgroundColor: 'white', height: '52px', justifyContent: 'center', boxShadow: 'none' }}>
         <Toolbar sx={{ margin: 'auto' }}>
 
-          <Toolbar sx={{ alignItems: 'center', gap: '10px' }}>
+          <Toolbar sx={{ alignItems: 'center', gap: '10px',mr:'50px' }}>
             <img src={LinkedinIcon} alt='' className='iconsimage'></img>
 
 
