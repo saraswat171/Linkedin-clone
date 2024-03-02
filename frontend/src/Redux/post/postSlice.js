@@ -39,14 +39,16 @@ export const postSlice = createSlice({
           state.error = null;
        
         })
-        .addCase(fetchPostUser.fulfilled, (state,action) => {
+       
+        .addCase(fetchPostUser.fulfilled, (state, action) => {
           state.isLoading = false;
-          //state.data = action.payload;
-          state.data = [...(state.data || []), ...action.payload]
-          state.createdAt = action.payload[action.payload.length - 1]?.createdAt
-          console.log("action",state.data)
-        
-        })
+          const newPosts = action.payload?.filter(post => !state.data?.find(existingPost => existingPost._id === post._id));
+          state.data = [...(state.data || []), ...newPosts];
+          state.createdAt = action.payload[action.payload.length - 1]?.createdAt;
+          console.log("action", state.data);
+      })
+      
+      
         .addCase(fetchPostUser.rejected, (state, action) => {
           state.isLoading = false;
           state.error = action.payload;

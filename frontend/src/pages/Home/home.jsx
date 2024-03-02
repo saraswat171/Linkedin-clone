@@ -33,7 +33,7 @@ function Home() {
       return;
     }
    
-    if(postData.length < 15)
+    if(postData.length < 16)
     {dispatch(fetchPostUser(time?.createdAt))}
   };
   useEffect(() => {
@@ -45,10 +45,8 @@ function Home() {
 
   useEffect(() => {
     dispatch(fetchPostUser(1));
-    if (!logged) {
-      navigate('/Login');
-    }
-  }, [logged, navigate ]);
+   
+  }, []);
 
   return (
 

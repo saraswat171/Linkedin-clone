@@ -23,8 +23,10 @@ exports.getPosts = async (querys) => {
         if(createAt){ 
         query= {  createdAt: { $lt: (new Date(createAt)) } }
        }
-        const postData = await PostModel.find(query).populate(  'user' ,  'name' ).sort({createdAt :-1}).limit(3);
-        console.log('postData: ', postData);
+       const count = await PostModel.countDocuments()
+        const postData = await PostModel
+        .find(query).populate(  'user' ,  'name' ).sort({createdAt :-1}).limit(3);
+        console.log('postData: ', postData , count);
         
         if (postData.length === 0) {
             throw new CustomError("No post Found", 404)

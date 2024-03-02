@@ -81,7 +81,7 @@ function Navbar() {
               <Typography fontSize={'12px'} align="center">Jobs</Typography>
             </Link>
 
-            <Link href="" sx={{
+            <Link href="/message" sx={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', textDecoration: 'none',
 
