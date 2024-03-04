@@ -43,7 +43,7 @@ export default function PostCard({ body, title, images, users, postId, profile, 
     const [seemore, setSeemore] = useState(true)
     const [seecomment, setSeecomment] = useState(false)
     const [Reactiondiv, SetReactiondiv] = useState(false)
-    const [reaction, setReaction] = useState('Like')
+    const [reaction, setReaction] = useState('')
 
     const [reactionId, setReactionId] = useState(null)
     const handleCommentClick = () => {
@@ -133,12 +133,15 @@ export default function PostCard({ body, title, images, users, postId, profile, 
                         {title}
                     </Typography>
 
-                    <Typography fontSize={'15px'} color="text.secondary" sx={{ overflow: 'hidden', height: seemore ? '20px' : 'auto', wordBreak: 'break-word' }}>
+                    <Typography fontSize={'15px'} color="text.secondary" 
+                    sx={{ overflow: 'hidden', height: seemore ? '20px' : 'auto', wordBreak: 'break-word' }}>
                         {body}
                     </Typography>
 
 
-                    <Button className="seemore" onClick={() => { setSeemore(!seemore) }} sx={{ textTransform: 'lowercase' }} >{!seemore ? <>...less</> : <>...more</>}</Button>
+                    <Button className="seemore" onClick={() => { setSeemore(!seemore) }} 
+                    sx={{ textTransform: 'lowercase' }} >{!seemore ? <>...less</> : <>...more</>}
+                    </Button>
 
 
 
@@ -188,7 +191,8 @@ export default function PostCard({ body, title, images, users, postId, profile, 
                     >
                         <ThumbUpOffAltRoundedIcon fontSize='20px' />
                         <Typography fontSize={'14px'} >{reaction ? reaction : 'Like'}</Typography>
-                        {Reactiondiv && <Box className='reactionsdiv' onClick={(e) => e.stopPropagation()} > <ReactionBarSelector onSelect={(label) => {
+                        {Reactiondiv && <Box className='reactionsdiv' onClick={(e) => e.stopPropagation()} > 
+                        <ReactionBarSelector onSelect={(label) => {
                             if (label === 'satisfaction') {
                                 label = 'Like'
                             }
@@ -198,14 +202,7 @@ export default function PostCard({ body, title, images, users, postId, profile, 
                                 ReactionClick(label)
                             }
 
-                        }
-
-
-
-
-
-
-                        } /></Box>}
+                        }} /></Box>}
                     </IconButton>
                     <IconButton sx={{ gap: '10px' }} onClick={handleCommentClick} >
 

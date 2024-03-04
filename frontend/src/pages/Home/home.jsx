@@ -51,7 +51,8 @@ function Home() {
   return (
 
 <>
-{logoutloader ? <Box sx={{fontSize:'60px', color:'Black',display:'flex' , alignItems:'center',justifyContent:'center' }}>Logging your out. Please wait ....... </Box> :    <Stack flexDirection={'column'} gap={'20px'} >
+{logoutloader ? <Box sx={{fontSize:'60px', color:'Black',display:'flex' , alignItems:'center',justifyContent:'center' }}>Logging your out. Please wait ....... </Box> : 
+   <Stack flexDirection={'column'} gap={'20px'} >
      <Navbar/>
  <Stack flexDirection={'row'} gap={'20px'} margin={'auto'}>
   <ProfileCard/>
