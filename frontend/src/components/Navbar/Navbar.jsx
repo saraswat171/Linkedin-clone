@@ -1,5 +1,5 @@
 
-import { AppBar, InputAdornment, Link, TextField, Toolbar, Typography, Box, Button } from '@mui/material'
+import { AppBar, InputAdornment, TextField, Toolbar, Typography, Box, Button } from '@mui/material'
 import React from 'react'
 import LinkedinIcon from '../../Assets/icons/icon.png'
 import SearchIcon from '@mui/icons-material/Search';
@@ -10,7 +10,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
 import './Navbar.css'
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate  } from 'react-router-dom';
 import { logoutUser } from '../../Redux/auth/authAction';
 import {  resetpost } from '../../Redux/post/postSlice';
 
@@ -48,59 +48,80 @@ function Navbar() {
 
           <Toolbar sx={{ alignItems: 'center', gap: '30px' }} >
 
-            <Link href="/Home" sx={{
+            <Link to="/Home"  style={{textDecoration:'none'}} >
+              <Box sx={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', textDecoration: 'none',
 
               color: (theme) => theme.palette.grey[700],
               "&:hover": { color: "#191919" },
               '&:active': { textDecoration: 'underline', textUnderlinePosition: '10px' }
-            }}   >
-              <HouseIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
+            }} >
+<HouseIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
               <Typography fontSize={'12px'} align="center"   >Home</Typography>
+              </Box>
+              
             </Link>
 
-            <Link href="/mynetwork" sx={{
+            <Link to="/mynetwork" style={{textDecoration:'none'}}  >
+              <Box sx={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', textDecoration: 'none',
 
               color: (theme) => theme.palette.grey[700],
               "&:hover": { color: "#191919" },
               '&:active': { textDecoration: 'underline', textUnderlinePosition: '10px' }
-            }}   >< PeopleAltIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
-              <Typography fontSize={'12px'} width={'65px'} display={'block'} align="center">My Network</Typography>
+            }} >
+< PeopleAltIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
+              <Typography fontSize={'12px'} width={'65px'} display={'block'} align="center">
+                My Network</Typography>
+              </Box>
+              
             </Link>
-            <Link href="" sx={{
+
+            
+            <Link to=""  style={{textDecoration:'none'}} >
+              <Box sx={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', textDecoration: 'none',
 
               color: (theme) => theme.palette.grey[700],
               "&:hover": { color: "#191919" },
               '&:active': { textDecoration: 'underline', textUnderlinePosition: '10px' }
-            }}   >< BusinessCenterIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
+            }} >
+< BusinessCenterIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
               <Typography fontSize={'12px'} align="center">Jobs</Typography>
+              </Box>
+              
             </Link>
 
-            <Link href="/message" sx={{
+            <Link to="/message"  style={{textDecoration:'none'}}  >
+              <Box sx={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', textDecoration: 'none',
 
               color: (theme) => theme.palette.grey[700],
               "&:hover": { color: "#191919" },
               '&:active': { textDecoration: 'underline', textUnderlinePosition: '10px' }
-            }}   >
-              <i class="fa-sharp fa-solid fa-comment-dots fa-flip-horizontal" style={{ height: '24px', width: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}></i>
+            }}>
+              <i class="fa-sharp fa-solid fa-comment-dots fa-flip-horizontal" style={{ height: '24px', width: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' ,textDecoration:'none'}}></i>
               <Typography fontSize={'12px'} align="center">Messages</Typography>
+              </Box>
+           
             </Link>
-            <Link href="" sx={{
+            <Link to="" style={{textDecoration:'none'}}    >
+              <Box sx={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', textDecoration: 'none',
 
               color: (theme) => theme.palette.grey[700],
               "&:hover": { color: "#191919" },
               '&:active': { textDecoration: 'underline', textUnderlinePosition: '10px' }
-            }}   >< NotificationsIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
-              <Typography fontSize={'12px'} align="center">Jobs</Typography>
+            }}>
+ < NotificationsIcon sx={{ height: '24px', width: '24px', alignItems: 'center' }} />
+              <Typography fontSize={'12px'} align="center">Notifications</Typography>
+              </Box>
+             
             </Link>
             <Button onClick={handleLogout} sx={{
               display: 'flex', flexDirection: 'column',

@@ -5,15 +5,20 @@ import React, { useState } from 'react'
 import './SuggestionCard.css'
 import { useDispatch } from 'react-redux';
 import { connectionUser} from '../../Redux/connection/connectionAction';
+import { useNavigate } from 'react-router-dom';
 function SuggestionCard({name , id , image}) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [Rquest , setRequest]=useState(false)
   const handleConnectClick=( )=>{
       dispatch(connectionUser(id));
       setRequest(true)
       
     } 
-    
+    const user={name:name , _id:id , image:image}
+    const handleprofileclick =()=>{
+      navigate('/myprofile',{state:{user}})
+    }
     
   return (
 <Paper key={id} sx={{width:'184px',height:'max-content' ,backgroundColor:'#FFFFFF',borderRadius:"10px","&:hover":{boxShadow:6}  }} className='papper'  elevation={1}>
@@ -21,7 +26,7 @@ function SuggestionCard({name , id , image}) {
     <Stack flexDirection={'column'} alignItems={'center'} >
          <Box  > <img src={backgroundimg} alt='' style={{width:'184px' , height:'62px' ,borderRadius:10, borderBottomLeftRadius:0 , borderBottomRightRadius:0 ,background:'skyblue' }}></img></Box>
        
-         <Avatar alt='' src='' sx={{height:'104px' , width:'104px', mt:'-52px', }}/>
+         <Avatar alt='' src='' onClick={handleprofileclick} sx={{height:'104px' , width:'104px', mt:'-52px', }}/>
     </Stack >
     <Stack flexDirection={'column'} sx={{m:0 ,pb:1.5,pl:'12px', pr:'12px',justifyContent:'center', alignItems:'center' }}>
         <Typography  fontSize={'16px'} >{name}</Typography>

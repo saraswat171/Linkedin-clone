@@ -61,7 +61,7 @@ exports.fetchconnection = async(userId)=>{     //userId from authentication
  
 //    }
 try{
-    console.log('response ', {Status :'Pending' , senderId:`${userId}`})
+   
     // const response = await ConnectionModel.find({ $or: [ { senderId: userId }, { recieverId: userId } ] }); 
    const myId = new ObjectId(userId);
     const response = await ConnectionModel.aggregate([{
@@ -76,9 +76,10 @@ try{
         {
             $lookup:{
                 from:'users',
+           
                 localField: 'senderId',
                 foreignField: '_id',
-                pipeline:[{$project:{'name':1}}],
+                pipeline:[{$project:{ name : 1}}],
                 as: 'sendername'
 
             }
@@ -96,9 +97,15 @@ try{
         acc[curr._id] = curr.data;
         return acc;
     }, {});
-    console.log('transformedResponse: ', response);
-
-  
+    
+    const ids=  transformedResponse['Accepted']?.map(connection =>(connection.senderId).toString() === (myId).toString() ?  connection.receiverId : connection.senderId )
+    
+    
+    const accepted = await UsersModel.find({_id : {$in : [...ids]} }); 
+    
+    
+    transformedResponse['Accepted']=accepted;
+    console.log('transformedResponse: ', transformedResponse['Accepted']);
     return transformedResponse;
    }
    catch(err){

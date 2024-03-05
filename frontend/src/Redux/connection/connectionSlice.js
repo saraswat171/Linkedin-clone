@@ -49,7 +49,7 @@ export const connectionSlice = createSlice({
           state.connectiondata=action.payload
           state.acceptedData = state.connectiondata['Accepted'];
           state.requestData = state.connectiondata['Pending'];
-          console.log('request data: ', state.requestData);
+          console.log('request data: ', state.acceptedData);
           
         
         })

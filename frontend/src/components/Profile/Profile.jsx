@@ -1,12 +1,16 @@
 import React from 'react'
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import backgroundimg from '../../Assets/images/painting-mountain-lake-with-mountain-background_188544-9126.avif'
+import { useNavigate } from 'react-router-dom';
 
 function ProfileCard() {
  // const userdata = JSON.parse(localStorage.getItem('user'));
  const user= JSON.parse(localStorage.getItem('user'));
 //console.log('user --->', user.name);
-  
+const navigate = useNavigate();
+  const handleprofileclick =()=>{
+    navigate('/myprofile',{state:{user}})
+  }
   return (
     <Stack flexDirection={'column'} sx={{width:'225px',height:'max-content' ,backgroundColor:'#FFFFFF'}} >
         <Stack flexDirection={'column'} >
@@ -17,7 +21,8 @@ function ProfileCard() {
                 </img></Box>
         </Stack >
         <Stack flexDirection={'column'} sx={{m:0 ,pb:1.5, alignItems:'center' ,width:'225px'}}>
-            <Typography  fontSize={'16px'}>{user?.name}</Typography>
+            <Button onClick={handleprofileclick}  fontSize={'16px'} sx={{cursor:'pointer' , p:'0',textTransform:'none' , color:'black'}}
+             >{user?.name}</Button>
             <Typography mt={'4px'} fontSize={'12px'}>Software developer at Zenmonk</Typography>
        
         </Stack>
