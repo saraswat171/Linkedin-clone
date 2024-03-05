@@ -4,6 +4,7 @@ import postReducer from './post/postSlice'
 import commentReducer from './comment/commentSlice'
 import reactionReducer from './reaction/reactionSlice'
 import connectionReducer from './connection/connectionSlice'
+import roomReducer from './room/roomSlice'
 export default configureStore({
   reducer: {
   
@@ -12,6 +13,7 @@ export default configureStore({
    comment:commentReducer,
    reaction:reactionReducer,
    connection:connectionReducer,
+   room:roomReducer,
   
   },
 });

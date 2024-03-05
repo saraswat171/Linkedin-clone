@@ -4,5 +4,6 @@ module.exports = {
     commentServices:require('./commentServices'),
     reactionServices:require('./reactionServices'),
     authServices:require('./authServices'),
-    connectionServices: require('./connectionServices')
+    connectionServices: require('./connectionServices'),
+    roomServices: require('./roomServices')
 }

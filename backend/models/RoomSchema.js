@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const UsersModel = require('./UserSchema')
 
 const RoomSchema = new mongoose.Schema({
-    ParticipantsId: {
-        type: Array,
+    ParticipantsId: [{
+        type: mongoose.Schema.Types.ObjectId,
+       
         ref: UsersModel,
         required : true
-    },
+    }]
 
-  
+    
   
 
 

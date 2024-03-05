@@ -39,7 +39,7 @@ function CommentCard({ commentData }) {
                         }
                     />
                     <CardContent className='hxhxh' sx={{ paddingTop: '0', paddingRight: '16px', paddingLeft: '12px' }}>
-                        <Typography variant="body2" color="text.secondary" >
+                        <Typography variant="body2" color="text.secondary"  sx={{ wordBreak: 'break-word'}}>
                             {commentData.body}
                         </Typography>
                         <Stack backgroundColor={'red'}>

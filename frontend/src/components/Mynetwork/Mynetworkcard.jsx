@@ -17,13 +17,19 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import TagOutlinedIcon from '@mui/icons-material/TagOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 export default function Mynetworkcard() {
     const [open, setOpen] = React.useState(true);
     const acptedData = useSelector((state)=>state.connection.acceptedData)
+    const navigate = useNavigate()
     const count = acptedData?.length;
 
     const handleClick = () => {
         setOpen(!open);
+    };
+    const handleShowConnection=()=>{
+     navigate('/connectedusers',{state:{acptedData}} )
     };
 
     return (
@@ -41,7 +47,8 @@ export default function Mynetworkcard() {
                 <ListItemIcon>
                 <PeopleAltIcon/>
                 </ListItemIcon>
-                <ListItemText sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',alignItems:'center', color: '#666666' }} primary="Connections" secondary={count} />
+                <ListItemText onClick={handleShowConnection}
+                sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',alignItems:'center', color: '#666666' }} primary="Connections" secondary={count} />
 
             </ListItemButton>
 

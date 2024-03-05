@@ -52,10 +52,11 @@ export const reactionSlice = createSlice({
       .addCase(deleteReactionUser.fulfilled, (state, action) => {
           state.loading = false;
           state.deletesuccess = true;
+
          
-          // const remainingData = Object.values(state.data)?.filter((item) => item?._id !== action.payload.reactionId)
-          // console.log('remainingData: ', remainingData);
-          // state.data = remainingData
+          const remainingData = Object.values(state.data)?.filter((item) => item?._id !== action.payload.reactionId)
+          console.log('remainingData: ', remainingData);
+          state.data = remainingData
          
 
       })

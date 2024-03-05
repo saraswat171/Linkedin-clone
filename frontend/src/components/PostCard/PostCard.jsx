@@ -43,7 +43,7 @@ export default function PostCard({ body, title, images, users, postId, profile, 
     const [seemore, setSeemore] = useState(true)
     const [seecomment, setSeecomment] = useState(false)
     const [Reactiondiv, SetReactiondiv] = useState(false)
-    const [reaction, setReaction] = useState('')
+    const [reaction, setReaction] = useState('Like')
 
     const [reactionId, setReactionId] = useState(null)
     const handleCommentClick = () => {
@@ -182,6 +182,8 @@ export default function PostCard({ body, title, images, users, postId, profile, 
                     marginLeft: '16px',
                     marginRight: '16px', padding: '0px'
                 }} />
+
+
                 <CardActions sx={{ display: 'flex', justifyContent: 'space-around', position: 'relative' }}>
                     <IconButton sx={{ gap: '10px', color: Boolean(ReactionsData[postId]?.find((likes) => likes.userId === userId?._id)) ? '#0374b3' : '#807c7c' }}
 
@@ -191,7 +193,9 @@ export default function PostCard({ body, title, images, users, postId, profile, 
                     >
                         <ThumbUpOffAltRoundedIcon fontSize='20px' />
                         <Typography fontSize={'14px'} >{reaction ? reaction : 'Like'}</Typography>
+
                         {Reactiondiv && <Box className='reactionsdiv' onClick={(e) => e.stopPropagation()} > 
+
                         <ReactionBarSelector onSelect={(label) => {
                             if (label === 'satisfaction') {
                                 label = 'Like'
@@ -202,8 +206,13 @@ export default function PostCard({ body, title, images, users, postId, profile, 
                                 ReactionClick(label)
                             }
 
-                        }} /></Box>}
+                        }} />
+                        
+                        </Box>}
                     </IconButton>
+
+
+
                     <IconButton sx={{ gap: '10px' }} onClick={handleCommentClick} >
 
                         <i class="fa-regular fa-comment" style={{ height: '20px', width: '20px' }}></i>

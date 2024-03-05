@@ -1,5 +1,5 @@
 import { Box, Button, Divider, FormControl, IconButton, InputBase, Stack, Tab, Tabs, Typography } from "@mui/material"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -15,7 +15,9 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import GifIcon from '@mui/icons-material/Gif';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import Navbar from "../../components/Navbar/Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRoomUser } from "../../Redux/room/roomAction";
+import socketIO from 'socket.io-client'
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -23,13 +25,22 @@ function a11yProps(index) {
   };
 }
 const Messages = () => {
-  const acptedData = useSelector((state)=>state.connection?.acceptedData)
+
+  const ENDPOINT = 'http://localhost:8081/'
+const socket = socketIO(ENDPOINT, { transports: ['websocket'] })
+  const dispatch = useDispatch();
   const [user , setUser]= useState(null)
   
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const roomUser= useSelector((state)=>state.room.roomdata)
+  console.log('roomUser: ', roomUser);
+
+  useEffect(()=>{
+    dispatch(fetchRoomUser(1))
+},[dispatch])
  
   
    return (
@@ -38,7 +49,7 @@ const Messages = () => {
       <Stack margin={'auto'} flexDirection={'row'}>
        
              
-                <Box sx={{ width: "313px", border: "1px solid #e8e8e8", p: '0',backgroundColor:'white',height:'100vh' }}>
+                <Box sx={{ width: "313px", border: "1px solid #e8e8e8", p: '0',backgroundColor:'white',height:'730px' }}>
                   <Box sx={{ height: "48px", width: "100%", border: "1px solid #e8e8e8", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Typography sx={{ pl: "16px", pr: "16px" }}>Messaging</Typography>
                     <Box sx={{ mr: "8px", display: "flex" }}>
@@ -75,9 +86,9 @@ const Messages = () => {
           <Tab sx={{textTransform:'none'}} label="Other" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      {acptedData?.map((acpt)=>(
+      {Object.values(roomUser)?.map((room)=>(
      
-            <MessageCard data={acpt} key={acpt._id} setUser={setUser} />
+            <MessageCard data={room} key={room._id} setUser={setUser} />
       ))}
 
                 </Box>
@@ -103,7 +114,7 @@ const Messages = () => {
                        fontWeight: '500',
                      }}
                    >
-                     {user?.name || 'Default'} 
+                     {user?.ParticipantsId[0]?.name || 'Default'} 
                    </Typography>
 
                    <Stack flexDirection={'row'} gap={2}>
@@ -139,7 +150,7 @@ const Messages = () => {
 
                  <Stack
                    flexDirection={'row'}
-                   sx={{ pt: '10px', pr: '12px', pl: '12px', boxSizing: 'border-box' }}
+                   sx={{ pt: '20px', pr: '12px', pl: '12px', boxSizing: 'border-box' }}
                    gap={2}
                    alignItems={'center'}
                    justifyContent={'space-between'}

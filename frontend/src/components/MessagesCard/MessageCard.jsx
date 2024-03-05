@@ -21,7 +21,7 @@ export default function MessageCard({data, setUser}) {
        <Avatar sx={{width:"56px", height:"56px" , ml:'8px'}}/>
        <Box sx={{pt:'12px', pb:"12px", pl:"8px", pr:"8px", width:"100%", boxSizing:"border-box"}}>
          <Box sx={{display:'flex', justifyContent:"space-between"}}>
-           <Box sx={{lineHeight:"24px", fontSize:"16px", fontWeight:"400", fontStyle:"normal", color:"rgba(0,0,0,0.9)"}}>{data?.name}</Box>
+           <Box sx={{lineHeight:"24px", fontSize:"16px", fontWeight:"400", fontStyle:"normal", color:"rgba(0,0,0,0.9)"}}>{data?.ParticipantsId[0]?.name}</Box>
            
            <Box sx={{fontSize:"15px"}}>Date</Box>
          </Box>

@@ -8,6 +8,7 @@ import Mynetwork from '../pages/Network/Mynetwork';
 import Messages  from '../pages/Messages/Messages'
 import Myprofile from '../pages/Myprofile/Myprofile';
 import NotFound from '../components/Notfound/Notfound';
+import ConnectedUsers from '../pages/ConnectedUsers/ConnectedUsers';
 
 function Layout() {
 
@@ -39,6 +40,11 @@ function Layout() {
           <Route path='/myprofile' element={
             <PrivateRoute>
               <Myprofile />
+            </PrivateRoute>
+          } />
+           <Route path='/connectedusers' element={
+            <PrivateRoute>
+              <ConnectedUsers />
             </PrivateRoute>
           } />
           <Route path="*" element={<NotFound />} />

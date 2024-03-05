@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 
 const authenticateJWT = (req, res, next) => {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+    console.log('req.headers: ', req.headers);
+    console.log('token: ', token);
 
     if (!token) {
         res.locals.isAuthenticated = false;
