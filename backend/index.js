@@ -43,23 +43,31 @@ app.use('/',reactionRoutes);
 app.use('/', connectionRoutes);
 app.use('/' , roomRoutes);
 
-server.listen(8081, () => {
-  console.log(`Server running on port 8081`);
-});
+
 
 // Socket.IO
 io.on('connection', (socket) => {
   console.log(`Socket ${socket.id} connected`);
 
-  socket.on('sendMessage', (message) => {
-    io.emit('message', message);
+  socket.on('joinRoom', (roomId) => {
+    console.log('ff',roomId)
+    socket.join(roomId);
+  });
+
+  // Example event: send message
+  socket.on('sendMessage', (data) => {
+   
+    io.to(data.roomId).emit('message', data.message);
+    console.log('pp',data)
   });
 
   socket.on('disconnect', () => {
-    console.log(`Socket ${socket.id} disconnected`);
+    console.log('Client disconnected');
   });
 });
-
+server.listen(8081, () => {
+  console.log(`Server running on port 8081`);
+});
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Server is running on port ${process.env.PORT} || 8080`);
 });

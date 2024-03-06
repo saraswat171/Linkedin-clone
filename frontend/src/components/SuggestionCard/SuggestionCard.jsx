@@ -8,7 +8,7 @@ import { connectionUser} from '../../Redux/connection/connectionAction';
 import { useNavigate } from 'react-router-dom';
 function SuggestionCard({name , id , image}) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const [Rquest , setRequest]=useState(false)
   const handleConnectClick=( )=>{
       dispatch(connectionUser(id));
