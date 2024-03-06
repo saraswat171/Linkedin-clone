@@ -3,17 +3,28 @@ import * as React from 'react';
 
 import Box from '@mui/material/Box';
 import { Avatar } from '@mui/material';
+import { socket } from "../../utils/socket";
+import { useDispatch } from 'react-redux';
+import { fetchMessageUser } from '../../Redux/message/messageAction';
 
 
 
 
 
+export default function MessageCard({data, setUser}) { 
+  const dispatch = useDispatch()
+  const handleRoomSelect = (id) => {
+    setUser(data)
+  console.log('id: ', id);
 
-export default function MessageCard({data, setUser}) {
+  // Joining the socket room
+  socket.emit('joinRoom', id);
+  dispatch(fetchMessageUser(id))
+};
    console.log('data of', data)
   return (
   
-      <Box onClick={()=>{setUser(data)}} sx={{ width: '100%' , cursor:'pointer' }}    >
+      <Box onClick={()=>handleRoomSelect(data?._id)} sx={{ width: '100%' , cursor:'pointer' }}    >
      
     
       

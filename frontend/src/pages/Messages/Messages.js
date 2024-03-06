@@ -1,5 +1,5 @@
 import { Box, Button, Divider, FormControl, IconButton, InputBase, Stack, Tab, Tabs, Typography } from "@mui/material"
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -17,124 +17,72 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import Navbar from "../../components/Navbar/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRoomUser } from "../../Redux/room/roomAction";
-import socketIO from 'socket.io-client'
+import { socket } from "../../utils/socket";
+import MessageShowCard from "../../components/MessagesCard/MessageShowCard";
+import { addNewMessages } from "../../Redux/message/messageSlice";
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-// const Messages = () => {
 
-//   const ENDPOINT = 'http://localhost:8081/'
-// const socket = socketIO(ENDPOINT, { transports: ['websocket'] })
-//   const dispatch = useDispatch();
-//   const [user , setUser]= useState(null)
-
-//   const [value, setValue] = useState(0);
-//   const handleChange = (event, newValue) => {
-//     setValue(newValue);
-//   };
-//   const roomUser= useSelector((state)=>state.room.roomdata)
-//   console.log('roomUser: ', roomUser);
-
-//   useEffect(()=>{
-//     dispatch(fetchRoomUser(1))
-// },[dispatch])
 
 
 function Messages() {
 
-  const ENDPOINT = 'http://localhost:8081/';
-  const socket = socketIO(ENDPOINT, { transports: ['websocket'] });
-  const dispatch = useDispatch();
-  const [messageInput, setMessageInput] = useState('');
-  const [value, setValue] = useState(0);
-  const [user, setUser] = useState(null);
 
+
+
+  const checkscroll = useRef(null)
+  const dispatch = useDispatch();
+  const [user, setUser] = useState(null);
+  const [value, setValue] = useState(0);
+  const [messageInput, setMessageInput] = useState('');
+  const loggeduser = JSON.parse(localStorage.getItem('user'))
+  const messagedata = useSelector((state) => state.message.messageData)
+  console.log('messagedata: ', messagedata);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const roomUser = useSelector((state) => state.room.roomdata);
 
+
   useEffect(() => {
     dispatch(fetchRoomUser(1));
+   
   }, [dispatch]);
 
-  const handleSendMessage = useCallback(() => {
+  const handleSendMessage = (e) => {
+    e.preventDefault();
     if (!messageInput.trim()) return;
-    socket.emit('sendMessage', { roomId: user?._id, message: messageInput });
-    setMessageInput('');
-  }, [socket, messageInput, user]);
 
-  const handleRoomSelect = useCallback((id) => {
-    socket.emit('joinRoom', id);
-  }, [socket]);
+    // Emitting the message to the server
+    socket.emit('sendMessage', { roomId: user?._id, message: messageInput, senderId: loggeduser?._id });
+    
+    // Clearing the message input
+    setMessageInput('');
+  };
 
   useEffect(() => {
-    const handleIncomingMessage = (data) => {
-      console.log('Received message:', data);
-      // Update UI to display the incoming message
-    };
-
-    socket.on('connect', () => {
+    checkscroll.current.scrollIntoView({ behavior: "smooth" })
+    socket.connect();
+    socket.on('connection ', () => {
       console.log('Connected to Socket.IO server');
     });
-
-    socket.on('message', handleIncomingMessage);
+    socket.on('message', (data) => {
+      console.log('Received message:', data);
+      dispatch(addNewMessages(data))
+    });
 
     return () => {
-      socket.off('message', handleIncomingMessage);
+      socket.off('message');
+      socket.disconnect();
     };
-  }, [socket]);
+  }, []);
 
-  // const ENDPOINT = 'http://localhost:8081/';
-  // const socket = socketIO(ENDPOINT, { transports: ['websocket'] });
-  // const dispatch = useDispatch();
-  // const [user, setUser] = useState(null);
-  // const [value, setValue] = useState(0);
-  // const [messageInput, setMessageInput] = useState('');
 
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
-
-  // const roomUser = useSelector((state) => state.room.roomdata);
-  // console.log('roomUser: ', roomUser);
-
-  // useEffect(() => {
-  //   dispatch(fetchRoomUser(1));
-  // }, [dispatch]);
-
-  // const handleSendMessage = () => {
-  //   if (!messageInput.trim()) return;
-  //   console.log('Received message:',messageInput );
-  //   // Emitting the message to the server
-  //   socket.emit('sendMessage', { roomId: user?._id, message: messageInput });
-  //   // Clearing the message input
-  //   setMessageInput('');
-  // };
-
-  // useEffect(() => {
-  //   socket.on('connect', () => {
-  //     console.log('Connected to Socket.IO server');
-  //   });
-  //   // Handling incoming messages
-  //   socket.on('message', (data) => {
-  //     console.log('Received message:', data);
-  //     // Update UI to display the incoming message
-  //   });
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [socket]);
-
-  // const handleRoomSelect = (id) => {
-
-  //   // Joining the socket room
-  //   socket.emit('joinRoom', id);
-  // };
   return (
     <Stack flexDirection={'column'} gap={'20px'}>
       <Navbar />
@@ -180,7 +128,7 @@ function Messages() {
           </Box>
           {Object.values(roomUser)?.map((room) => (
 
-            <MessageCard data={room} key={room._id} setUser={setUser} />
+            <MessageCard data={room} key={room?._id} setUser={setUser} />
           ))}
 
         </Box>
@@ -200,14 +148,14 @@ function Messages() {
               alignItems={'center'}
               sx={{ width: '100%', boxSizing: 'border-box', padding: '8px' }}
             >
-              <Typography 
+              <Typography
                 sx={{
                   fontSize: '16px',
                   fontWeight: '500',
                 }}
               >
                 {user?.ParticipantsId[0]?.name || 'Default'}
-              </Typography> <Button type="button" onClick={()=>handleRoomSelect(user?._id)} >pp</Button>
+              </Typography>
 
               <Stack flexDirection={'row'} gap={2}>
                 <MoreHorizIcon />
@@ -217,9 +165,17 @@ function Messages() {
 
             </Stack>
             <Divider />
-            <Box component={'form'} onSubmit={handleSendMessage}>
-              <Stack sx={{ height: '55vh' }}>
 
+
+            <Box component={'form'} onSubmit={handleSendMessage}>
+              <Stack flexDirection={'column'} sx={{ height: '55vh' ,overflow:'scroll'}}>
+
+
+                {messagedata?.map((message) => (
+                  <MessageShowCard key={message?._id} data={message} dataroom={user}/>
+                ))}
+
+                <div ref={checkscroll}></div>
               </Stack>
               <Divider />
               <Stack sx={{ boxSizing: 'border-box', padding: '10px', height: '121px' }}>

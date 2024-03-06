@@ -5,5 +5,6 @@ module.exports = {
     reactionServices:require('./reactionServices'),
     authServices:require('./authServices'),
     connectionServices: require('./connectionServices'),
-    roomServices: require('./roomServices')
+    roomServices: require('./roomServices'),
+    messageServices:  require('./messageServices')
 }

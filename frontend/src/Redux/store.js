@@ -5,6 +5,7 @@ import commentReducer from './comment/commentSlice'
 import reactionReducer from './reaction/reactionSlice'
 import connectionReducer from './connection/connectionSlice'
 import roomReducer from './room/roomSlice'
+import messageReducer from './message/messageSlice'
 export default configureStore({
   reducer: {
   
@@ -14,6 +15,7 @@ export default configureStore({
    reaction:reactionReducer,
    connection:connectionReducer,
    room:roomReducer,
+   message:messageReducer,
   
   },
 });

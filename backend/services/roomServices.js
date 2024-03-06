@@ -20,7 +20,7 @@ exports.userRoom = async ({ body, userId }) => {
         output.room = (roomExist && roomExist.length !== 0) ?
             roomExist : await RoomModel.create({ ParticipantsId })
         if (!output.room) throw new CustomError("Room not created", 500);
-        console.log('output: ', output);
+        // console.log('output: ', output);
         return output
     }
     catch (err) { throw err; }
@@ -35,7 +35,7 @@ exports.fetchedRoom = async ({ userId }) => {
                                             select: ['_id', 'email', 'name', 'image'],
                                             match: { _id: { $ne: userId } }
                                              });
-    console.log('response: ', response);
+    // console.log('response: ', response);
     if (!response) throw new CustomError("No rooms found", 204);
     return response;
 }
