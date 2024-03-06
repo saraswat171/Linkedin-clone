@@ -64,9 +64,11 @@ function Messages() {
     // Clearing the message input
     setMessageInput('');
   };
-
-  useEffect(() => {
+  useEffect(()=>{
     checkscroll.current.scrollIntoView({ behavior: "smooth" })
+  },[messagedata])
+  useEffect(() => {
+   
     socket.connect();
     socket.on('connection ', () => {
       console.log('Connected to Socket.IO server');
