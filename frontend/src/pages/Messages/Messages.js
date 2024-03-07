@@ -79,6 +79,7 @@ function Messages() {
     });
 
     return () => {
+      socket.off('connection')
       socket.off('message');
       socket.disconnect();
     };

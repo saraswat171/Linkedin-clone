@@ -1,5 +1,6 @@
 const ReactionModel = require('../models/ReactionSchema')
 const CustomError = require('../libs/error')
+const axios = require('axios')
 exports.uploadReaction= async(params , userId ,body)=>{
 
    
@@ -9,13 +10,26 @@ exports.uploadReaction= async(params , userId ,body)=>{
 
        
         const databody =  Object.keys(body)[0];
-        console.log('id' , postId)
-        const newReaction = await ReactionModel.findOneAndUpdate({ userId:userId , postId:postId}, { type:databody}, { upsert: true, new: true })
-       console.log(newReaction)
+    
+        const newReaction = await ReactionModel
+        .findOneAndUpdate({ userId:userId , postId:postId}, { type:databody}, { upsert: true, new: true })
+        
+        console.log('newReaction: ', newReaction);
+        try{ 
+            console.log('newPost: ');
+            const notif = await axios.post('http://localhost:8001/notifications' ,
+             newReaction)
+
+        }
+        catch(e){
+            console.log('ggg',e.message)
+            throw e;
+        }
+       
         return newReaction;
     }
     catch(err){
-        console.log(err)
+        //console.log(err.message)
         throw err;
     }
 

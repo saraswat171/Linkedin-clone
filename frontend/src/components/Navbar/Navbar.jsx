@@ -109,7 +109,7 @@ function Navbar() {
               </Box>
            
             </Link>
-            <Link to="" style={{textDecoration:'none'}}    >
+            <Link to="/notifications" style={{textDecoration:'none'}}    >
               <Box sx={{
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', textDecoration: 'none',

@@ -9,6 +9,7 @@ import Messages  from '../pages/Messages/Messages'
 import Myprofile from '../pages/Myprofile/Myprofile';
 import NotFound from '../components/Notfound/Notfound';
 import ConnectedUsers from '../pages/ConnectedUsers/ConnectedUsers';
+import Notifications from '../pages/Notifications/Notifications';
 
 function Layout() {
 
@@ -16,6 +17,7 @@ function Layout() {
     const isAuth = localStorage.getItem("token");
     return isAuth === null ? <Navigate to="/Login" /> : <>{children}</>;
   };
+  
   return (
    <Router>
     <NetworkDetector>
@@ -45,6 +47,11 @@ function Layout() {
            <Route path='/connectedusers' element={
             <PrivateRoute>
               <ConnectedUsers />
+            </PrivateRoute>
+          } />
+          <Route path='/notifications' element={
+            <PrivateRoute>
+             <Notifications/>
             </PrivateRoute>
           } />
           <Route path="*" element={<NotFound />} />

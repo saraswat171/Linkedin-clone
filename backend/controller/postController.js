@@ -1,4 +1,5 @@
 const CustomError = require("../libs/error");
+
 const { postServices } = require("../services")
 
 exports.uploadPosts = async(req,res)=>{
@@ -8,6 +9,7 @@ exports.uploadPosts = async(req,res)=>{
         }
             const userId = req.user.ID;
         const response = await postServices.userPosts({title:req.body.title , body:req.body.body , files:req.files , id:userId});
+ 
         return res.status(201).json(response)
     }
     catch(e){

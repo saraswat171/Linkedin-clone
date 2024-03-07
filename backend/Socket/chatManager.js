@@ -16,8 +16,10 @@ module.exports = async(server) => {
         })
 
         socket.on("sendMessage", async({message, roomId, senderId})=> {
-            console.log('sendMessage: ', message);
+          //  console.log('sendMessage: ', message);
             // save the message in the db, then ....
+           //  io.sockets.adapter.rooms.get('Room Name');
+        
             const messageData = await MessageModel.create({roomId, content:message, senderId});
             console.log(message, roomId, senderId, messageData, "-------response");
             io.in(roomId).emit('message',messageData);
